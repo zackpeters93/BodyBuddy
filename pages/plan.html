@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Plan - BodyFocus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .phase-card {
+            border-left: 4px solid var(--electron-blue);
+            transition: all 0.3s ease;
+        }
+        .phase-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .phase-badge {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--city-lights);
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--electron-blue);
+            border: 2px solid white;
+        }
+        .dependency-badge {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="specification.html">Specification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="plan.html">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tasks.html">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quickstart.html">Quickstart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-map me-3"></i>Implementation Plan</h1>
+            <p class="lead mb-0">BodyFocus Core v0.1 - Phased Development Approach</p>
+            <div class="mt-3">
+                <span class="badge bg-warning text-dark me-2">10 Phases</span>
+                <span class="badge bg-info me-2">21 Days Estimated</span>
+                <span class="badge bg-light text-dark">Status: Planning</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Overview Section -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-info-circle text-primary me-2"></i>Overview</h2>
+                    <p class="card-text">
+                        This plan outlines the implementation approach for BodyFocus v0.1, a minimal viable workout planning app for iOS.
+                        The implementation follows a <strong>bottom-up approach</strong>: build the core data models and workout engine first,
+                        then wrap them in SwiftUI views.
+                    </p>
+                    <div class="alert alert-info mt-3">
+                        <strong><i class="fas fa-lightbulb me-2"></i>Strategy:</strong> Start with the foundation (models, engine, storage),
+                        then build up to the UI layer. This ensures the core logic is solid before adding presentation.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Timeline -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-calendar-alt text-primary me-2"></i>Implementation Timeline</h2>
+
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Days 1-2</h5>
+                            <p class="card-text">Foundation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Days 3-5</h5>
+                            <p class="card-text">Core Engine</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Days 6-15</h5>
+                            <p class="card-text">UI & Features</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Days 16-21</h5>
+                            <p class="card-text">Testing & Polish</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Phases -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-layer-group text-primary me-2"></i>Implementation Phases</h2>
+
+            <!-- Phase 1 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 1</span>
+                            Foundation & Models
+                        </h3>
+                        <span class="badge bg-secondary">Days 1-2</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Create the core Swift package with all data models and enums.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>BodyFocusCore</code> Swift Package</div>
+                        <div class="timeline-item">Define all enums (<code>PrimaryGoal</code>, <code>KneeProfile</code>, <code>MuscleGroup</code>, <code>EquipmentType</code>, <code>KneeLoadLevel</code>, <code>DayType</code>)</div>
+                        <div class="timeline-item">Define core models (<code>UserProfile</code>, <code>Exercise</code>, <code>WorkoutExercise</code>, <code>WorkoutSession</code>, <code>PreWorkoutCheckIn</code>)</div>
+                        <div class="timeline-item">Add <code>Identifiable</code> and <code>Codable</code> conformance to all models</div>
+                        <div class="timeline-item">Write unit tests for model serialization/deserialization</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Compilable <code>BodyFocusCore</code> package with all models defined.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-secondary dependency-badge">Dependencies: None</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 2</span>
+                            Exercise Library & Workout Engine
+                        </h3>
+                        <span class="badge bg-secondary">Days 3-4</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Build the rules-based workout generation engine.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>ExerciseLibrary.swift</code> with static exercise database (15-20 exercises covering all muscle groups)</div>
+                        <div class="timeline-item">Tag exercises with <code>kneeLoad</code> (low/moderate/high), <code>primaryMuscle</code>, <code>equipment</code>, <code>isCompound</code></div>
+                        <div class="timeline-item">Implement <code>WorkoutEngine</code> struct with <code>generateWeek(for:startDate:)</code> function</div>
+                        <div class="timeline-item">Implement exercise filtering logic based on knee profile</div>
+                        <div class="timeline-item">Implement day-type generation (fullBody only in v0.1)</div>
+                        <div class="timeline-item">Implement exercise selection algorithm (1 hinge, 1 push, 1 pull, 1-2 arms)</div>
+                        <div class="timeline-item">Implement <code>adjust(session:with:)</code> function for pre-workout check-ins</div>
+                        <div class="timeline-item">Write unit tests for engine logic (knee filtering, goal-based arm volume, check-in adjustments)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Fully functional workout engine that generates valid 3-day plans.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 1 (models)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 3</span>
+                            Data Persistence Layer
+                        </h3>
+                        <span class="badge bg-secondary">Day 5</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Implement local storage for user profile and workout sessions.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>DataStore</code> protocol with methods: <code>loadProfile()</code>, <code>saveProfile()</code>, <code>loadSessions()</code>, <code>saveSessions()</code></div>
+                        <div class="timeline-item">Implement <code>JSONDataStore</code> using FileManager to save/load JSON to Documents directory</div>
+                        <div class="timeline-item">Add error handling for file I/O operations</div>
+                        <div class="timeline-item">Write unit tests for persistence (save/load profile, save/load sessions)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Working local storage layer.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 1 (models)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 4</span>
+                            iOS App Structure & Navigation
+                        </h3>
+                        <span class="badge bg-secondary">Days 6-7</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Set up the iOS app target with navigation and tab structure.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>BodyFocusApp</code> iOS app target in Xcode</div>
+                        <div class="timeline-item">Link <code>BodyFocusCore</code> package to app target</div>
+                        <div class="timeline-item">Create <code>BodyFocusApp.swift</code> (main app entry point with @main)</div>
+                        <div class="timeline-item">Create <code>RootView.swift</code> with conditional logic: show onboarding if no profile, else show main tabs</div>
+                        <div class="timeline-item">Create empty placeholder views for: <code>OnboardingView</code>, <code>TodayView</code>, <code>WorkoutPlayerView</code>, <code>SettingsView</code></div>
+                        <div class="timeline-item">Set up basic navigation structure (no functionality yet, just wireframes)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Navigable app shell with placeholder screens.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 1 (models)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 3 (data store)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 5</span>
+                            Onboarding Flow
+                        </h3>
+                        <span class="badge bg-secondary">Days 8-10</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Build the complete onboarding experience.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>OnboardingViewModel</code> to manage state across steps</div>
+                        <div class="timeline-item">Implement <code>GoalSelectionView</code> (Step 1) with segmented control or cards for goal selection</div>
+                        <div class="timeline-item">Implement <code>KneeProfileView</code> (Step 2) with radio buttons for knee status</div>
+                        <div class="timeline-item">Implement <code>ScheduleView</code> (Step 3) with pickers for days/week and minutes/session</div>
+                        <div class="timeline-item">Implement <code>EquipmentView</code> (Step 4) with checkboxes for equipment types</div>
+                        <div class="timeline-item">Add navigation controls (Continue, Back buttons) between steps</div>
+                        <div class="timeline-item">On final step submit, save profile to data store and generate first week's workout plan</div>
+                        <div class="timeline-item">Trigger navigation to <code>TodayView</code> after onboarding completion</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Fully functional onboarding flow that creates user profile and workout plan.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 2 (workout engine)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 3 (data store)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 4 (navigation)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 6</span>
+                            Today Screen & Pre-Workout Check-In
+                        </h3>
+                        <span class="badge bg-secondary">Days 11-12</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Build the main dashboard and check-in feature.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>TodayViewModel</code> to load profile, sessions, and determine today's workout</div>
+                        <div class="timeline-item">Implement <code>TodayView</code> layout with three sections: check-in, workout summary, weekly overview</div>
+                        <div class="timeline-item">Implement <code>PreWorkoutCheckInView</code> with sliders for energy (1-5) and knee pain (0-2)</div>
+                        <div class="timeline-item">Implement "Adjust & Start Workout" button that calls <code>WorkoutEngine.adjust()</code> and navigates to Workout Player</div>
+                        <div class="timeline-item">Implement "Skip Check-in & Start" button that navigates directly to Workout Player</div>
+                        <div class="timeline-item">Display "Rest day" message when no workout is scheduled for today</div>
+                        <div class="timeline-item">Handle edge cases (no sessions generated, future dates)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Functional Today screen with working check-in adjustments.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 2 (workout engine)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 3 (data store)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 5 (onboarding)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 7 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 7</span>
+                            Workout Player
+                        </h3>
+                        <span class="badge bg-secondary">Days 13-15</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Build the core workout tracking experience.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>WorkoutViewModel</code> to manage active session state</div>
+                        <div class="timeline-item">Implement <code>WorkoutPlayerView</code> layout: header with progress, current exercise card, set tracking table</div>
+                        <div class="timeline-item">Implement set completion logic (mark set as done, move to next set)</div>
+                        <div class="timeline-item">Implement exercise navigation (move forward/back through exercises)</div>
+                        <div class="timeline-item">Implement workout completion flow (mark session as complete, save to data store, navigate back to Today)</div>
+                        <div class="timeline-item">Implement progress persistence (save partial progress if user exits mid-workout)</div>
+                        <div class="timeline-item">Add simple elapsed timer display</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Fully functional workout tracking with set completion and persistence.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 3 (data store)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 6 (Today screen)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 8 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 8</span>
+                            Settings Screen
+                        </h3>
+                        <span class="badge bg-secondary">Days 16-17</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Allow users to view and edit their profile.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Create <code>SettingsViewModel</code> to load and update profile</div>
+                        <div class="timeline-item">Implement <code>SettingsView</code> layout with profile display and edit controls</div>
+                        <div class="timeline-item">Implement profile update logic (save changes to data store)</div>
+                        <div class="timeline-item">Implement plan regeneration (call workout engine with updated profile)</div>
+                        <div class="timeline-item">Implement data reset (delete all local files, show onboarding on next launch)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Functional settings screen with profile editing.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 2 (workout engine)</span>
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 3 (data store)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 9 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 9</span>
+                            Testing & Bug Fixes
+                        </h3>
+                        <span class="badge bg-secondary">Days 18-19</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Comprehensive testing and bug fixing.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Manual testing of all user stories from spec.md</div>
+                        <div class="timeline-item">Test edge cases (no equipment selected, restricted knees with no low-load exercises, etc.)</div>
+                        <div class="timeline-item">Test data persistence (app restart, partial workout completion, profile changes)</div>
+                        <div class="timeline-item">Fix any bugs discovered during testing</div>
+                        <div class="timeline-item">Add logging/debugging statements for troubleshooting</div>
+                        <div class="timeline-item">Test on physical iOS device (not just simulator)</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Stable, tested v0.1 app.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>All previous phases</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 10 -->
+            <div class="card phase-card mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <span class="badge bg-primary phase-badge">Phase 10</span>
+                            Polish & Documentation
+                        </h3>
+                        <span class="badge bg-secondary">Days 20-21</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="lead"><strong>Goal:</strong> Final polish and documentation.</p>
+
+                    <h5 class="mt-3">Tasks:</h5>
+                    <div class="timeline">
+                        <div class="timeline-item">Add app icon and launch screen</div>
+                        <div class="timeline-item">Improve UI styling (colors, typography, spacing)</div>
+                        <div class="timeline-item">Add loading states and error messages</div>
+                        <div class="timeline-item">Write README.md with setup instructions</div>
+                        <div class="timeline-item">Write CHANGELOG.md</div>
+                        <div class="timeline-item">Create user-facing documentation (how to use the app)</div>
+                        <div class="timeline-item">Document code with comments where needed</div>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <strong><i class="fas fa-check-circle me-2"></i>Deliverable:</strong> Polished, documented v0.1 ready for personal use.
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="badge bg-info dependency-badge"><i class="fas fa-arrow-right me-1"></i>Phase 9 (testing complete)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Architecture -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-sitemap text-primary me-2"></i>Technical Architecture</h2>
+                    <h5>Module Structure:</h5>
+                    <pre class="bg-light p-3 rounded"><code>BodyFocus/
+├── BodyFocusCore/               # Swift Package (shared logic)
+│   ├── Sources/BodyFocusCore/
+│   │   ├── Models/
+│   │   │   ├── Enums.swift
+│   │   │   ├── UserProfile.swift
+│   │   │   ├── Exercise.swift
+│   │   │   ├── WorkoutSession.swift
+│   │   │   └── CheckIn.swift
+│   │   ├── Engine/
+│   │   │   ├── WorkoutEngine.swift
+│   │   │   └── ExerciseLibrary.swift
+│   │   └── Storage/
+│   │       ├── DataStore.swift
+│   │       └── JSONDataStore.swift
+│   └── Tests/BodyFocusCoreTests/
+│       ├── ModelTests.swift
+│       ├── EngineTests.swift
+│       └── StorageTests.swift
+├── BodyFocusApp/                # iOS App Target
+│   ├── BodyFocusApp.swift       # @main entry point
+│   ├── RootView.swift           # Conditional: onboarding vs tabs
+│   ├── Views/
+│   │   ├── Onboarding/
+│   │   ├── Today/
+│   │   ├── Workout/
+│   │   └── Settings/
+│   ├── ViewModels/
+│   │   ├── OnboardingViewModel.swift
+│   │   ├── TodayViewModel.swift
+│   │   ├── WorkoutViewModel.swift
+│   │   └── SettingsViewModel.swift
+│   └── Assets.xcassets/
+└── README.md</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Assessment -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Risk Assessment</h2>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-danger mb-3">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="fas fa-times-circle me-2"></i>High Risk</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Data persistence edge cases</strong></p>
+                            <p class="small">File I/O failures, corrupted JSON, app crashes mid-save</p>
+                            <p class="text-muted small"><strong>Mitigation:</strong> Comprehensive error handling, backup files, atomic writes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-warning mb-3">
+                        <div class="card-header bg-warning">
+                            <h5 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>Medium Risk</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Workout generation edge cases</strong></p>
+                            <p class="small">No exercises match constraints</p>
+                            <p class="text-muted small"><strong>Mitigation:</strong> Fallback logic, warn user</p>
+                            <hr>
+                            <p><strong>UI/UX complexity</strong></p>
+                            <p class="small">Set tracking, navigation, state management</p>
+                            <p class="text-muted small"><strong>Mitigation:</strong> Build incrementally, test frequently</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-success mb-3">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Low Risk</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Onboarding navigation</strong></p>
+                            <p class="small">Relatively straightforward SwiftUI navigation</p>
+                            <p class="text-muted small"><strong>Mitigation:</strong> Use established SwiftUI patterns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testing Strategy -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-vial text-primary me-2"></i>Testing Strategy</h2>
+
+                    <h5>Unit Tests (BodyFocusCore):</h5>
+                    <ul>
+                        <li><strong>Models:</strong> Test Codable conformance (encode/decode round-trip)</li>
+                        <li><strong>Workout Engine:</strong> Test exercise filtering, volume calculations, adjustment logic</li>
+                        <li><strong>Data Store:</strong> Test save/load operations, file path handling</li>
+                    </ul>
+
+                    <h5 class="mt-3">Integration Tests:</h5>
+                    <ul>
+                        <li><strong>Onboarding → Workout Generation:</strong> Verify profile saves and workout plan generates</li>
+                        <li><strong>Check-in → Adjustment:</strong> Verify check-in values correctly reduce sets</li>
+                        <li><strong>Workout Completion → Persistence:</strong> Verify completed sessions save and load</li>
+                    </ul>
+
+                    <h5 class="mt-3">Manual Testing:</h5>
+                    <ul>
+                        <li><strong>User Story Walkthroughs:</strong> Test each acceptance scenario from spec.md</li>
+                        <li><strong>Edge Cases:</strong> Test boundary conditions (no equipment, restricted knees, etc.)</li>
+                        <li><strong>Device Testing:</strong> Test on physical iPhone (not just simulator)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Metrics -->
+        <section class="mb-5">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h2 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>Success Metrics (v0.1)</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>User can complete onboarding and see a workout plan in under 3 minutes</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Pre-workout check-in successfully adjusts workout volume</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>User can track and complete a full workout session</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Workout plan respects knee constraints (no high-load exercises for sensitive/restricted)</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Arm-focused users receive 2 arm exercises per session</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>App persists data across restarts (no data loss)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Phases -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-rocket text-primary me-2"></i>Future Phases (Post v0.1)</h2>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><span class="badge bg-info">v0.2</span> Health & Watch</h5>
+                            <ul>
+                                <li>HealthKit integration (HR tracking, workout logging)</li>
+                                <li>watchOS companion app</li>
+                                <li>Pre/post check-in on Watch</li>
+                                <li>WatchConnectivity for real-time sync</li>
+                            </ul>
+
+                            <h5 class="mt-3"><span class="badge bg-info">v0.3</span> AI & Intelligence</h5>
+                            <ul>
+                                <li>Backend API for AI services</li>
+                                <li>Free-text note interpretation</li>
+                                <li>Block-level plan adjustments</li>
+                                <li>Insight cards</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><span class="badge bg-info">v0.4</span> Context & Integration</h5>
+                            <ul>
+                                <li>Geolocation-based gym detection</li>
+                                <li>Calendar and Reminders integration</li>
+                                <li>Multiple location profiles</li>
+                                <li>Voice commands for workout logging</li>
+                            </ul>
+
+                            <h5 class="mt-3"><span class="badge bg-info">v0.5</span> Market Ready</h5>
+                            <ul>
+                                <li>Preset workout templates</li>
+                                <li>Shareable plans</li>
+                                <li>Onboarding presets</li>
+                                <li>Polished design and animations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BodyFocus Implementation Plan</h5>
+                    <p class="text-muted mb-0">
+                        <small>10 Phases • 21 Days • Bottom-Up Architecture</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="../index.html" class="text-white-50">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - BodyFocus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .doc-section {
+            scroll-margin-top: 100px;
+        }
+        .doc-content {
+            line-height: 1.8;
+        }
+        .doc-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--city-lights);
+        }
+        .doc-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--electron-blue);
+        }
+        .doc-content code {
+            background-color: var(--city-lights);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .doc-content pre {
+            background-color: var(--dracula-orchid);
+            color: var(--city-lights);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .doc-content pre code {
+            background-color: transparent;
+            color: var(--city-lights);
+            padding: 0;
+        }
+        .doc-content ul, .doc-content ol {
+            margin-left: 1.5rem;
+        }
+        .doc-content li {
+            margin-bottom: 0.5rem;
+        }
+        .toc {
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--dracula-orchid);
+            display: block;
+            padding: 0.25rem 0.5rem;
+            border-left: 2px solid transparent;
+        }
+        .toc a:hover {
+            background-color: var(--city-lights);
+            border-left-color: var(--electron-blue);
+        }
+        .toc a.active {
+            color: var(--electron-blue);
+            font-weight: bold;
+            border-left-color: var(--electron-blue);
+        }
+        .search-highlight {
+            background-color: var(--bright-yarrow);
+            padding: 0.1rem 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="specification.html">Specification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plan.html">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tasks.html">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="documentation.html">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quickstart.html">Quickstart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-book me-3"></i>Project Documentation</h1>
+            <p class="lead mb-0">Complete reference for BodyFocus development</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container-fluid my-5">
+        <div class="row">
+            <!-- Sidebar Table of Contents -->
+            <div class="col-lg-3">
+                <div class="toc">
+                    <h5 class="mb-3"><i class="fas fa-list me-2"></i>Table of Contents</h5>
+                    <nav id="tocNav">
+                        <!-- Will be populated by JavaScript -->
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Documentation -->
+            <div class="col-lg-9">
+                <!-- Search Bar -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control" id="docSearch" placeholder="Search documentation...">
+                            <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs mb-4" id="docTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="readme-tab" data-bs-toggle="tab" data-bs-target="#readme" type="button">
+                            <i class="fas fa-file-alt me-2"></i>README
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="claude-tab" data-bs-toggle="tab" data-bs-target="#claude" type="button">
+                            <i class="fas fa-robot me-2"></i>CLAUDE.md
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="constitution-tab" data-bs-toggle="tab" data-bs-target="#constitution" type="button">
+                            <i class="fas fa-gavel me-2"></i>Constitution
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="docTabContent">
+                    <!-- README Tab -->
+                    <div class="tab-pane fade show active" id="readme" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body doc-content">
+                                <h1 class="doc-section" id="readme-overview">BodyFocus - Workout Planning App</h1>
+                                <p class="lead">A hyper-personalized iOS workout planning application that adapts to injuries, goals, and real-time feedback using 4-Hour Body methodology.</p>
+
+                                <h2 class="doc-section" id="readme-features">Features</h2>
+                                <ul>
+                                    <li><strong>Personalized Workout Generation:</strong> Creates custom 3-day workout plans based on your goals, knee health, schedule, and available equipment</li>
+                                    <li><strong>Knee-Safe Exercise Filtering:</strong> Automatically excludes high knee-load exercises for users with knee sensitivities or restrictions</li>
+                                    <li><strong>Pre-Workout Check-In:</strong> Adjusts workout volume based on your current energy and knee pain levels</li>
+                                    <li><strong>Real-Time Progress Tracking:</strong> Track sets, reps, and weights during your workout with automatic progress saving</li>
+                                    <li><strong>4-Hour Body Philosophy:</strong> Minimal effective dose training with focus on compound movements</li>
+                                    <li><strong>Arm Development Focus:</strong> Optional arm-focused goal increases arm exercise volume</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="readme-tech">Technology Stack</h2>
+                                <ul>
+                                    <li><strong>Language:</strong> Swift 5.9+</li>
+                                    <li><strong>UI Framework:</strong> SwiftUI (iOS 17+)</li>
+                                    <li><strong>Data Persistence:</strong> JSON-based local storage (v0.1), SwiftData migration planned (v0.2)</li>
+                                    <li><strong>Architecture:</strong> Swift Package Manager with modular structure</li>
+                                    <li><strong>Platforms:</strong> iOS 17+ (watchOS support in v0.2)</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="readme-structure">Project Structure</h2>
+                                <pre><code>Workout/
+├── BodyFocusCore/              # Swift Package (shared logic)
+│   ├── Sources/BodyFocusCore/
+│   │   ├── Models/             # Data models and enums
+│   │   ├── Engine/             # Workout generation logic
+│   │   └── Storage/            # Data persistence
+│   └── Tests/                  # Unit tests
+├── BodyFocusApp/               # iOS App Target
+│   ├── Views/                  # SwiftUI views
+│   ├── ViewModels/             # ObservableObject view models
+│   └── Assets.xcassets/        # App resources
+├── specs/                      # Feature specifications
+│   └── 001-bodyfocus-core/
+│       ├── spec.md             # Feature specification
+│       ├── plan.md             # Implementation plan
+│       └── tasks.md            # Task breakdown
+├── CLAUDE.md                   # Project instructions
+└── README.md                   # This file</code></pre>
+
+                                <h2 class="doc-section" id="readme-status">Current Status</h2>
+                                <p><strong>Version:</strong> v0.1 (Planning Phase Complete)</p>
+                                <p><strong>Next Steps:</strong></p>
+                                <ol>
+                                    <li>Create BodyFocusCore Swift Package and define models</li>
+                                    <li>Implement workout generation engine</li>
+                                    <li>Build iOS app UI with SwiftUI</li>
+                                    <li>Test and polish for personal use</li>
+                                </ol>
+
+                                <h2 class="doc-section" id="readme-roadmap">Future Roadmap</h2>
+                                <ul>
+                                    <li><strong>v0.2 - Health & Watch:</strong> HealthKit integration, watchOS companion app</li>
+                                    <li><strong>v0.3 - AI & Intelligence:</strong> AI-powered workout adjustments, natural language note interpretation</li>
+                                    <li><strong>v0.4 - Context & Integration:</strong> Geolocation-based gym detection, calendar integration</li>
+                                    <li><strong>v0.5 - Market Ready:</strong> Preset templates, shareable plans, App Store release</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="readme-philosophy">Philosophy</h2>
+                                <p>BodyFocus is built on these core principles:</p>
+                                <ul>
+                                    <li><strong>Safety First:</strong> Knee health is prioritized in every workout recommendation</li>
+                                    <li><strong>Minimal Effective Dose:</strong> Focus on compound movements done with intensity, not volume</li>
+                                    <li><strong>Real Bodies, Real Constraints:</strong> Built for people with injuries, time constraints, and specific goals</li>
+                                    <li><strong>Dogfooding:</strong> Built for personal use first, ensuring real-world validation before public release</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CLAUDE.md Tab -->
+                    <div class="tab-pane fade" id="claude" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body doc-content">
+                                <h1 class="doc-section" id="claude-overview">CLAUDE.md - Project Instructions</h1>
+                                <p class="lead">Instructions for Claude Code when working on the BodyFocus project.</p>
+
+                                <div class="alert alert-warning">
+                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>Critical:</strong> These instructions override default behavior and must be followed exactly.
+                                </div>
+
+                                <h2 class="doc-section" id="claude-critical">Critical Rules & Constraints</h2>
+
+                                <h3 id="claude-unauthorized">1. NEVER MAKE UNAUTHORIZED CHANGES</h3>
+                                <ul>
+                                    <li><strong>ONLY</strong> modify what is explicitly requested or specified in tasks</li>
+                                    <li><strong>NEVER</strong> change unrelated code, files, or functionality</li>
+                                    <li>If you think something else needs changing, <strong>ASK FIRST</strong></li>
+                                    <li>Changing anything not explicitly requested is considered a <strong>prohibited change</strong></li>
+                                </ul>
+
+                                <h3 id="claude-spec">2. FOLLOW THE SPEC</h3>
+                                <ul>
+                                    <li>All implementation MUST align with <code>specs/001-bodyfocus-core/spec.md</code></li>
+                                    <li>User stories define the acceptance criteria</li>
+                                    <li>Technical constraints define the boundaries</li>
+                                    <li>Out-of-scope features are deferred to future versions</li>
+                                </ul>
+
+                                <h3 id="claude-optimization">3. NO PREMATURE OPTIMIZATION</h3>
+                                <ul>
+                                    <li>v0.1 focuses on core functionality, not performance</li>
+                                    <li>Keep it simple: hard-coded exercise library, JSON storage, no AI</li>
+                                    <li>Advanced features (HealthKit, watchOS, geolocation, AI) are v0.2+</li>
+                                    <li>Don't add features that aren't in the spec</li>
+                                </ul>
+
+                                <h3 id="claude-safety">4. SAFETY FIRST</h3>
+                                <ul>
+                                    <li>Knee safety is a PRIMARY constraint (this is non-negotiable)</li>
+                                    <li>Exercise filtering by <code>kneeLoad</code> level MUST respect <code>KneeProfile</code></li>
+                                    <li><code>healthy</code>: all exercises allowed</li>
+                                    <li><code>sensitive</code>: exclude <code>high</code> knee load</li>
+                                    <li><code>restricted</code>: only <code>low</code> knee load</li>
+                                    <li>Pre-workout check-ins MUST reduce volume when pain is reported</li>
+                                </ul>
+
+                                <h3 id="claude-philosophy">5. PRESERVE 4-HOUR BODY PHILOSOPHY</h3>
+                                <ul>
+                                    <li>Minimal effective dose: few big lifts, done hard</li>
+                                    <li>Compound movements prioritized over isolation (except arms)</li>
+                                    <li>Low-moderate frequency (2-3x/week in v0.1)</li>
+                                    <li>Progression over time (future versions will track this)</li>
+                                </ul>
+
+                                <h3 id="claude-data">6. DATA INTEGRITY</h3>
+                                <ul>
+                                    <li>User profile and workout data MUST persist across app restarts</li>
+                                    <li>Use atomic writes (write to temp file, then rename) to prevent corruption</li>
+                                    <li>Handle file I/O errors gracefully (don't crash, show user-friendly errors)</li>
+                                    <li>Mid-workout progress MUST be saved (user can exit and resume)</li>
+                                </ul>
+
+                                <h3 id="claude-evidence">7. EVIDENCE-BASED CODING</h3>
+                                <ul>
+                                    <li>When implementing features, refer to the spec's acceptance scenarios</li>
+                                    <li>When fixing bugs, identify the specific requirement that was violated</li>
+                                    <li>When answering "is this implemented?", <strong>SHOW CODE EVIDENCE</strong> with file paths and line numbers</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="claude-workflow">Development Workflow</h2>
+
+                                <h3 id="claude-speckit">Using Spec Kit Commands</h3>
+                                <p>This project uses ClaudeControlCenter's <strong>Spec Kit</strong> methodology. Available slash commands:</p>
+                                <ul>
+                                    <li><code>/speckit.plan</code> - Generate implementation plan from spec</li>
+                                    <li><code>/speckit.specify</code> - Create feature specification</li>
+                                    <li><code>/speckit.tasks</code> - Break plan into actionable tasks</li>
+                                    <li><code>/speckit.implement</code> - Begin implementation with task tracking</li>
+                                    <li><code>/speckit.checklist</code> - Generate acceptance criteria checklist</li>
+                                    <li><code>/speckit.constitution</code> - Manage project governance rules</li>
+                                </ul>
+
+                                <h3 id="claude-tasks">Task Workflow</h3>
+                                <ol>
+                                    <li>Review <code>specs/001-bodyfocus-core/tasks.md</code> for current phase</li>
+                                    <li>Select next unchecked task</li>
+                                    <li>Implement task following spec requirements</li>
+                                    <li>Test implementation (unit tests for core, manual for UI)</li>
+                                    <li>Mark task as complete with ✅</li>
+                                    <li>Commit changes with descriptive message</li>
+                                </ol>
+
+                                <h2 class="doc-section" id="claude-success">Success Criteria (v0.1)</h2>
+                                <p>BodyFocus v0.1 is considered complete when:</p>
+                                <ul>
+                                    <li>✅ User can complete onboarding and see a workout plan in under 3 minutes</li>
+                                    <li>✅ Pre-workout check-in successfully adjusts workout volume based on energy/pain</li>
+                                    <li>✅ User can track and complete a full workout session with set-by-set progress</li>
+                                    <li>✅ Workout plan respects knee constraints (no high-load exercises for sensitive/restricted)</li>
+                                    <li>✅ Arm-focused users receive 2 arm exercises per session vs 1 for other goals</li>
+                                    <li>✅ App persists data across restarts (no data loss on force quit)</li>
+                                    <li>✅ All 73 tasks in tasks.md are complete with passing tests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Constitution Tab -->
+                    <div class="tab-pane fade" id="constitution" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body doc-content">
+                                <h1 class="doc-section" id="const-title">Project Constitution</h1>
+                                <p class="lead">Non-negotiable principles and governance rules for BodyFocus development.</p>
+
+                                <div class="alert alert-danger">
+                                    <strong><i class="fas fa-shield-alt me-2"></i>Authority:</strong> These principles are immutable and override all other considerations.
+                                </div>
+
+                                <h2 class="doc-section" id="const-mission">Mission Statement</h2>
+                                <blockquote class="blockquote">
+                                    <p>"Build for real bodies, not idealized ones."</p>
+                                </blockquote>
+                                <p>BodyFocus exists to serve people with real constraints: knee issues, time limitations, specific goals, and imperfect circumstances. Every decision must honor this reality.</p>
+
+                                <h2 class="doc-section" id="const-principles">Core Principles</h2>
+
+                                <h3 id="const-safety">1. Safety is Non-Negotiable</h3>
+                                <ul>
+                                    <li>Knee health takes precedence over all other goals</li>
+                                    <li>When in doubt, recommend the safer option</li>
+                                    <li>Exercise filtering by knee load is mandatory, not optional</li>
+                                    <li>Users must be able to flag pain during workouts</li>
+                                </ul>
+
+                                <h3 id="const-simplicity">2. Simplicity Over Features</h3>
+                                <ul>
+                                    <li>Add features only when there is clear user need</li>
+                                    <li>Remove features that add complexity without value</li>
+                                    <li>The best feature is often the one we don't build</li>
+                                    <li>v0.1 proves the concept; v0.2+ adds sophistication</li>
+                                </ul>
+
+                                <h3 id="const-dogfooding">3. Dogfooding is Mandatory</h3>
+                                <ul>
+                                    <li>This app must be used personally before public release</li>
+                                    <li>Every feature must survive real-world use</li>
+                                    <li>Design decisions come from lived experience, not assumptions</li>
+                                    <li>If it's not good enough for personal use, it's not ready</li>
+                                </ul>
+
+                                <h3 id="const-evidence">4. Evidence-Based Development</h3>
+                                <ul>
+                                    <li>Spec defines the truth; code implements the spec</li>
+                                    <li>User stories define acceptance criteria</li>
+                                    <li>All claims must be backed by code evidence</li>
+                                    <li>Test what matters; skip vanity metrics</li>
+                                </ul>
+
+                                <h3 id="const-integrity">5. Data Integrity is Sacred</h3>
+                                <ul>
+                                    <li>User data must never be lost due to our errors</li>
+                                    <li>Atomic writes prevent corruption</li>
+                                    <li>Graceful degradation over crashes</li>
+                                    <li>Mid-workout exits must preserve progress</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="const-prohibited">Prohibited Actions</h2>
+                                <p>The following actions are <strong>never</strong> permitted without explicit approval:</p>
+                                <ol>
+                                    <li>Changing core functionality to "fix" an error (fix the error, not the requirement)</li>
+                                    <li>Adding features not in the spec (scope creep)</li>
+                                    <li>Removing safety checks or knee-load filtering</li>
+                                    <li>Using placeholder values in production code</li>
+                                    <li>Implementing features marked as "out of scope for v0.1"</li>
+                                    <li>Committing code that doesn't compile or pass tests</li>
+                                    <li>Making assumptions about user needs without validation</li>
+                                </ol>
+
+                                <h2 class="doc-section" id="const-decision">Decision-Making Framework</h2>
+                                <p>When faced with a decision, apply this framework in order:</p>
+                                <ol>
+                                    <li><strong>Safety:</strong> Does this protect user health (especially knees)?</li>
+                                    <li><strong>Spec Alignment:</strong> Is this in the current version's spec?</li>
+                                    <li><strong>Simplicity:</strong> Is this the simplest solution that works?</li>
+                                    <li><strong>Data Integrity:</strong> Will user data remain safe?</li>
+                                    <li><strong>User Value:</strong> Does this solve a real problem?</li>
+                                </ol>
+
+                                <h2 class="doc-section" id="const-philosophy">Design Philosophy</h2>
+                                <ul>
+                                    <li><strong>Minimal Effective Dose:</strong> Few exercises, high intensity, adequate recovery</li>
+                                    <li><strong>Compound Movements First:</strong> Prioritize multi-joint exercises (except arms)</li>
+                                    <li><strong>Adaptive, Not Rigid:</strong> Workout adjusts to user's current state</li>
+                                    <li><strong>Progressive Disclosure:</strong> Simple onboarding, advanced features later</li>
+                                    <li><strong>Local First:</strong> User data stays on device (cloud sync is v0.2+)</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="const-future">Future Vision Alignment</h2>
+                                <p>All v0.1 decisions must support the long-term vision:</p>
+                                <ul>
+                                    <li>Architecture must allow watchOS integration (v0.2)</li>
+                                    <li>Data models must support AI features (v0.3)</li>
+                                    <li>UI patterns must scale to multi-location profiles (v0.4)</li>
+                                    <li>Code quality must be App Store ready (v0.5)</li>
+                                </ul>
+
+                                <h2 class="doc-section" id="const-amendment">Amendment Process</h2>
+                                <p>This constitution can only be amended through:</p>
+                                <ol>
+                                    <li>Documented justification for the change</li>
+                                    <li>Review of impact on existing principles</li>
+                                    <li>Explicit approval from project owner (Zack)</li>
+                                    <li>Update to this document with revision history</li>
+                                </ol>
+
+                                <div class="alert alert-info mt-4">
+                                    <strong><i class="fas fa-info-circle me-2"></i>Last Updated:</strong> 2025-12-15<br>
+                                    <strong>Version:</strong> 1.0<br>
+                                    <strong>Status:</strong> Active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BodyFocus Documentation</h5>
+                    <p class="text-muted mb-0">
+                        <small>Complete project reference • Always up to date</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="../index.html" class="text-white-50">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Generate Table of Contents
+        function generateTOC() {
+            const tocNav = document.getElementById('tocNav');
+            const sections = document.querySelectorAll('.doc-section');
+
+            sections.forEach(section => {
+                const link = document.createElement('a');
+                link.href = '#' + section.id;
+                link.textContent = section.textContent;
+                link.classList.add('toc-link');
+
+                // Add indentation based on heading level
+                const headingLevel = section.tagName.toLowerCase();
+                if (headingLevel === 'h3') {
+                    link.style.paddingLeft = '1.5rem';
+                }
+
+                tocNav.appendChild(link);
+            });
+        }
+
+        // Smooth scroll and active state
+        document.addEventListener('DOMContentLoaded', function() {
+            generateTOC();
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Active state on scroll
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.toc-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-100px 0px -80% 0px' });
+
+            document.querySelectorAll('.doc-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('docSearch');
+            const clearSearch = document.getElementById('clearSearch');
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const activeTab = document.querySelector('.tab-pane.active');
+                const content = activeTab.querySelector('.doc-content');
+
+                // Remove previous highlights
+                content.innerHTML = content.innerHTML.replace(/<span class="search-highlight">(.*?)<\/span>/g, '$1');
+
+                if (searchTerm.length > 2) {
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    content.innerHTML = content.innerHTML.replace(regex, '<span class="search-highlight">$1</span>');
+                }
+            });
+
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                document.querySelectorAll('.doc-content').forEach(content => {
+                    content.innerHTML = content.innerHTML.replace(/<span class="search-highlight">(.*?)<\/span>/g, '$1');
+                });
+            });
+
+            // Regenerate TOC when switching tabs
+            document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function() {
+                    generateTOC();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

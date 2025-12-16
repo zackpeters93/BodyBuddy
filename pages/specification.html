@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specification - BodyFocus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="specification.html">Specification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plan.html">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tasks.html">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quickstart.html">Quickstart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-file-alt me-3"></i>Feature Specification</h1>
+            <p class="lead mb-0">BodyFocus Core - iOS Workout Planning App (v0.1)</p>
+            <div class="mt-3">
+                <span class="badge bg-warning text-dark me-2">Feature: 001-bodyfocus-core</span>
+                <span class="badge bg-info me-2">Status: Draft</span>
+                <span class="badge bg-light text-dark">Created: 2025-12-15</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Overview Section -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-info-circle text-primary me-2"></i>Overview</h2>
+                    <p class="card-text">
+                        BodyFocus is a SwiftUI-based workout planning application for iOS and watchOS that creates personalized, adaptive workout plans.
+                        The app emphasizes <strong>minimal effective dose training</strong> (4-Hour Body philosophy), knee-safety, arms focus, and real-time
+                        adjustment based on pre-workout check-ins. This specification covers <strong>v0.1</strong>: the core rules-based workout engine with
+                        local storage, no AI, HealthKit, or geolocation.
+                    </p>
+                    <p class="card-text">
+                        <strong>Approach:</strong> The app follows a dogfooding approach—built for personal use first, then extended to app market distribution.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Stories Section -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-users text-primary me-2"></i>User Stories & Acceptance Scenarios</h2>
+
+            <div class="accordion" id="userStoriesAccordion">
+                <!-- User Story 1 -->
+                <div class="accordion-item mb-3 user-story p1">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#story1">
+                            <div>
+                                <span class="badge bg-danger me-2">P1</span>
+                                <strong>User Story 1:</strong> Complete Onboarding and Generate First Workout Plan
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story1" class="accordion-collapse collapse show" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">A new user opens the app for the first time and needs to provide their profile information to generate a personalized workout plan.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 1:</strong> This is the absolute foundation. Without onboarding, no workout plan can be generated. This delivers immediate value by creating the user's first customized plan.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle me-2"></i>Independent Test:</strong> Can be fully tested by completing the onboarding flow and verifying a 3-day workout plan is generated and displayed on the Today screen.
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user launches the app for the first time, <strong>When</strong> no profile exists, <strong>Then</strong> the onboarding flow displays automatically
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> the user is in onboarding Step 1 (Goals), <strong>When</strong> they select a primary goal (e.g., "Build Stronger Arms"), <strong>Then</strong> the selection is highlighted and Continue button enables
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 3:</strong> <strong>Given</strong> the user is in onboarding Step 2 (Knee Status), <strong>When</strong> they select their knee profile (healthy/sensitive/restricted), <strong>Then</strong> the selection is saved and they can proceed
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 4:</strong> <strong>Given</strong> the user is in onboarding Step 3 (Schedule), <strong>When</strong> they select days per week (1-3) and minutes per session (20/30/45), <strong>Then</strong> the values are stored
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 5:</strong> <strong>Given</strong> the user is in onboarding Step 4 (Equipment), <strong>When</strong> they select available equipment (bodyweight, dumbbells), <strong>Then</strong> multi-select checkboxes update
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 6:</strong> <strong>Given</strong> the user completes all onboarding steps, <strong>When</strong> they submit the final step, <strong>Then</strong> a 3-day workout plan generates and Today screen displays
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 7:</strong> <strong>Given</strong> a workout plan is generated, <strong>When</strong> the user returns to the app, <strong>Then</strong> onboarding does not display again
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Story 2 -->
+                <div class="accordion-item mb-3 user-story p1">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#story2">
+                            <div>
+                                <span class="badge bg-danger me-2">P1</span>
+                                <strong>User Story 2:</strong> Complete Pre-Workout Check-In and Adjust Workout
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story2" class="accordion-collapse collapse" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">Before starting a workout, the user checks in with their current energy and knee pain levels, and the app adjusts the workout accordingly.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 1:</strong> This is the core adaptive feature that makes the app "smart". It demonstrates immediate personalization and safety.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle me-2"></i>Independent Test:</strong> Can be fully tested by setting low energy or high knee pain and verifying the workout's sets are reduced.
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user opens the app on a scheduled workout day, <strong>When</strong> the Today screen loads, <strong>Then</strong> a pre-workout check-in card displays with energy (1-5) and knee pain (0-2) sliders
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> the user sets energy to 2 (low) and knee pain to 0, <strong>When</strong> they tap "Adjust & Start Workout", <strong>Then</strong> the workout's target sets decrease by 1 per exercise
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 3:</strong> <strong>Given</strong> the user sets energy to 5 (high) and knee pain to 2 (high), <strong>When</strong> they tap "Adjust & Start Workout", <strong>Then</strong> the workout's target sets decrease by 1 per exercise
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 4:</strong> <strong>Given</strong> the user sets energy to 4 and knee pain to 0, <strong>When</strong> they tap "Skip Check-in & Start", <strong>Then</strong> the workout loads without modifications
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 5:</strong> <strong>Given</strong> the check-in adjusts the workout, <strong>When</strong> the user enters the workout player, <strong>Then</strong> the adjusted sets display correctly
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Story 3 -->
+                <div class="accordion-item mb-3 user-story p1">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#story3">
+                            <div>
+                                <span class="badge bg-danger me-2">P1</span>
+                                <strong>User Story 3:</strong> Track Workout Progress and Mark Sets Complete
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story3" class="accordion-collapse collapse" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">During a workout, the user needs to track which sets they've completed for each exercise.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 1:</strong> This is the core workout execution feature. Without this, the app is just a plan viewer, not a tracker.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle me-2"></i>Independent Test:</strong> Can be fully tested by marking sets as done and verifying progress persists.
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user starts a workout, <strong>When</strong> the Workout Player opens, <strong>Then</strong> the first exercise displays with its name, muscle groups, knee load, target sets/reps/weight
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> the user is viewing an exercise, <strong>When</strong> they complete a set and tap "Mark set done", <strong>Then</strong> that set shows a checkmark and the next set highlights
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 3:</strong> <strong>Given</strong> the user marks all sets for an exercise complete, <strong>When</strong> they tap "Next", <strong>Then</strong> the next exercise in the plan displays
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 4:</strong> <strong>Given</strong> the user is on the last exercise and completes all sets, <strong>When</strong> they tap "Finish Workout", <strong>Then</strong> the session is marked complete in local storage
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 5:</strong> <strong>Given</strong> the user completes a workout, <strong>When</strong> they return to Today screen, <strong>Then</strong> that day shows a checkmark in the weekly overview
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 6:</strong> <strong>Given</strong> the user exits the Workout Player mid-session, <strong>When</strong> they return to the app, <strong>Then</strong> progress is saved and they can resume where they left off
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Story 4 -->
+                <div class="accordion-item mb-3 user-story p2">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#story4">
+                            <div>
+                                <span class="badge bg-warning text-dark me-2">P2</span>
+                                <strong>User Story 4:</strong> View Weekly Workout Schedule
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story4" class="accordion-collapse collapse" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">The user wants to see their workout schedule for the week to plan their time.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 2:</strong> Important for planning and adherence, but not essential for completing a single workout.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle me-2"></i>Independent Test:</strong> Can be fully tested by viewing the calendar/week view and verifying workout days display correctly.
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user has a generated 3-day plan, <strong>When</strong> they view the Today screen, <strong>Then</strong> a weekly overview displays with Mon-Fri and markers for each day (✓ completed, ● today, ○ planned)
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> the user completes Monday's workout, <strong>When</strong> they view the weekly overview on Tuesday, <strong>Then</strong> Monday shows ✓ and Tuesday shows ●
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 3:</strong> <strong>Given</strong> the user taps a future workout day, <strong>When</strong> the detail loads, <strong>Then</strong> they can preview that day's exercises (but not start it early in v0.1)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Story 5 -->
+                <div class="accordion-item mb-3 user-story p3">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#story5">
+                            <div>
+                                <span class="badge bg-success me-2">P3</span>
+                                <strong>User Story 5:</strong> Edit Profile Settings
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story5" class="accordion-collapse collapse" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">The user wants to change their goals, knee status, schedule, or equipment to reflect their evolving needs.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 3:</strong> Useful for long-term use but not needed for initial experience.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle me-2"></i>Independent Test:</strong> Can be fully tested by changing a setting and verifying it persists and affects future workout generation.
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user navigates to Settings, <strong>When</strong> the screen loads, <strong>Then</strong> current profile values display (goal, knee status, days/week, minutes, equipment)
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> the user changes their knee status from "healthy" to "sensitive", <strong>When</strong> they save changes, <strong>Then</strong> future workouts exclude high knee-load exercises
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 3:</strong> <strong>Given</strong> the user changes their primary goal from "General Fitness" to "Build Stronger Arms", <strong>When</strong> they regenerate the plan, <strong>Then</strong> arm exercises increase from 1 to 2 per session
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 4:</strong> <strong>Given</strong> the user taps "Reset App Data" in Settings, <strong>When</strong> they confirm the action, <strong>Then</strong> all profile and workout data is cleared and onboarding displays on next launch
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Story 6 -->
+                <div class="accordion-item mb-3 user-story p2">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#story6">
+                            <div>
+                                <span class="badge bg-warning text-dark me-2">P2</span>
+                                <strong>User Story 6:</strong> Exercise Substitution for Knee Pain
+                            </div>
+                        </button>
+                    </h3>
+                    <div id="story6" class="accordion-collapse collapse" data-bs-parent="#userStoriesAccordion">
+                        <div class="accordion-body">
+                            <p class="lead">The user experiences knee pain during a specific exercise and wants to flag it for future adjustments.</p>
+
+                            <div class="alert alert-info">
+                                <strong><i class="fas fa-exclamation-circle me-2"></i>Why Priority 2:</strong> This is a key safety and personalization feature but requires workout history to be fully effective (v0.2+ territory).
+                            </div>
+
+                            <h5 class="mt-4">Acceptance Scenarios:</h5>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 1:</strong> <strong>Given</strong> the user is performing an exercise in the Workout Player, <strong>When</strong> they toggle "This irritated my knees", <strong>Then</strong> the flag saves to that workout session log
+                            </div>
+                            <div class="acceptance-scenario">
+                                <strong>Scenario 2:</strong> <strong>Given</strong> an exercise has been flagged for knee pain 3+ times (future: v0.2), <strong>When</strong> a new plan generates, <strong>Then</strong> that exercise is replaced with a lower knee-load alternative
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Edge Cases -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Edge Cases</h2>
+                    <ul>
+                        <li><strong>What happens when the user completes onboarding but all equipment is deselected?</strong><br>
+                            → System defaults to bodyweight only exercises.</li>
+                        <li><strong>What happens when the user's knee profile is "restricted" and no low knee-load exercises exist?</strong><br>
+                            → App displays a message: "No exercises match your current constraints. Please adjust equipment or knee settings."</li>
+                        <li><strong>What happens when the user exits the app mid-workout without finishing?</strong><br>
+                            → Progress is saved locally; when they return, they can resume from the last completed set.</li>
+                        <li><strong>What happens when the user tries to start a workout on a rest day?</strong><br>
+                            → Today screen shows "Rest day" message with option to view other days' plans.</li>
+                        <li><strong>What happens when the workout generation fails due to data issues?</strong><br>
+                            → Error message displays: "Unable to generate workout plan. Please check your settings."</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functional Requirements -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-list-check text-primary me-2"></i>Functional Requirements</h2>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Requirement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FR-001</strong></td>
+                            <td>System MUST allow users to select a primary goal (general fitness, arms, knees, fat loss, strength) during onboarding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-002</strong></td>
+                            <td>System MUST allow users to select a knee profile (healthy, sensitive, restricted) that filters exercises by knee load level</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-003</strong></td>
+                            <td>System MUST allow users to select days per week (1-3) and minutes per session (20, 30, 45) during onboarding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-004</strong></td>
+                            <td>System MUST allow users to multi-select equipment types (bodyweight, dumbbells) available for workouts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-005</strong></td>
+                            <td>System MUST generate a 3-day workout plan after onboarding based on user profile constraints</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-006</strong></td>
+                            <td>System MUST display a pre-workout check-in on workout days with energy (1-5) and knee pain (0-2) sliders</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-007</strong></td>
+                            <td>System MUST adjust workout target sets based on check-in values (low energy or high knee pain reduces sets by 1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-008</strong></td>
+                            <td>System MUST display a Workout Player showing current exercise, sets/reps/weight, and set completion controls</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-009</strong></td>
+                            <td>System MUST persist workout progress to local storage (completed sets, session completion)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-010</strong></td>
+                            <td>System MUST display a weekly overview showing completed (✓), today (●), and planned (○) workout days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-011</strong></td>
+                            <td>System MUST filter exercises by knee load level based on user's knee profile (healthy=all, sensitive=exclude high, restricted=low only)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-012</strong></td>
+                            <td>System MUST increase arm exercise volume when primary goal is "arms" (2 arm exercises vs 1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-013</strong></td>
+                            <td>System MUST allow users to flag exercises as causing knee pain during workout execution</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-014</strong></td>
+                            <td>System MUST save user profile and workout data to local storage (SwiftData or JSON)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FR-015</strong></td>
+                            <td>System MUST allow users to reset all app data from Settings screen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Success Criteria -->
+        <section class="mb-5">
+            <h2 class="mb-4"><i class="fas fa-trophy text-warning me-2"></i>Success Criteria</h2>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Measurable Outcome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SC-001</strong></td>
+                            <td>Users can complete onboarding and generate their first workout plan in under 3 minutes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-002</strong></td>
+                            <td>Pre-workout check-in successfully adjusts workout volume (reduces sets) when energy ≤ 2 or knee pain ≥ 1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-003</strong></td>
+                            <td>Users can complete a full workout session with set tracking and mark the session as complete</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-004</strong></td>
+                            <td>Workout plan respects knee constraints: sensitive users receive 0 high knee-load exercises, restricted users receive only low knee-load exercises</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-005</strong></td>
+                            <td>Arm-focused users receive 2 arm exercises per session vs 1 for other goals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-006</strong></td>
+                            <td>Workout progress persists across app restarts (user can exit mid-workout and resume)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SC-007</strong></td>
+                            <td>Weekly overview correctly displays workout status for each day of the week</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Technical Constraints -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-cogs text-primary me-2"></i>Technical Constraints</h2>
+                    <h5>Platform Requirements:</h5>
+                    <ul>
+                        <li><strong>TC-001:</strong> iOS 17+ required for SwiftUI and SwiftData features</li>
+                        <li><strong>TC-002:</strong> watchOS 10+ required for companion app (future phase)</li>
+                        <li><strong>TC-003:</strong> Local storage only (SwiftData or JSON) - no cloud sync in v0.1</li>
+                        <li><strong>TC-004:</strong> No AI integration in v0.1 (rules-based engine only)</li>
+                        <li><strong>TC-005:</strong> No HealthKit, CoreLocation, EventKit, or WatchConnectivity integration in v0.1</li>
+                    </ul>
+                    <h5 class="mt-3">Technology Stack:</h5>
+                    <ul>
+                        <li><strong>Swift + SwiftUI:</strong> Core language and UI framework</li>
+                        <li><strong>SwiftData or Core Data:</strong> Local data persistence (v0.1 may use JSON for simplicity)</li>
+                        <li><strong>BodyFocusCore:</strong> Shared Swift Package for models, workout engine, and logic</li>
+                        <li><strong>BodyFocusApp:</strong> iOS app target (SwiftUI, iOS 17+)</li>
+                        <li><strong>BodyFocusWatchApp:</strong> watchOS target (future - v0.2+)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Out of Scope -->
+        <section class="mb-5">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-ban text-danger me-2"></i>Out of Scope (for v0.1)</h2>
+                    <p>The following features are explicitly deferred to future versions:</p>
+                    <ul>
+                        <li>AI-powered workout adjustments and note interpretation (v0.3)</li>
+                        <li>HealthKit integration for HR tracking and workout logging (v0.2)</li>
+                        <li>watchOS companion app (v0.2)</li>
+                        <li>Geolocation-based gym detection (v0.2)</li>
+                        <li>Calendar and Reminders integration (v0.2)</li>
+                        <li>Multi-location equipment profiles (v0.2)</li>
+                        <li>Exercise video demonstrations or form tips</li>
+                        <li>Social features or workout sharing</li>
+                        <li>Cloud sync or backup</li>
+                        <li>Nutrition tracking or body metrics tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Entities -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"><i class="fas fa-cube text-primary me-2"></i>Key Entities</h2>
+                    <ul>
+                        <li><strong>UserProfile:</strong> Represents the user's fitness profile with name, primary goal, knee profile, schedule (days/week, minutes/session), and equipment list</li>
+                        <li><strong>Exercise:</strong> Represents a specific movement with name, primary muscle group, knee load level (low/moderate/high), equipment required, and whether it's compound or isolation</li>
+                        <li><strong>WorkoutExercise:</strong> Represents a planned exercise within a workout with target sets, reps, and weight</li>
+                        <li><strong>WorkoutSession:</strong> Represents a single workout on a specific date with planned exercises, completion status, day index, and day type</li>
+                        <li><strong>PreWorkoutCheckIn:</strong> Represents pre-workout state with energy level (1-5) and knee pain level (0-2)</li>
+                        <li><strong>WorkoutExerciseLog:</strong> Represents completed sets with actual reps, weight, and pain flags</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BodyFocus Specification</h5>
+                    <p class="text-muted mb-0">
+                        <small>v0.1 Core Specification • 6 User Stories • 15 Requirements • 7 Success Criteria</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="../index.html" class="text-white-50">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

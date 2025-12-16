@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickstart Guide - BodyFocus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .step-card {
+            border-left: 4px solid var(--electron-blue);
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--electron-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .checklist-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--city-lights);
+            transition: background-color 0.3s ease;
+        }
+        .checklist-item:hover {
+            background-color: var(--city-lights);
+        }
+        .checklist-item.completed {
+            background-color: #d4edda;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .code-block {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .copy-btn:hover {
+            opacity: 1;
+        }
+        .progress-summary {
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="specification.html">Specification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plan.html">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tasks.html">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="quickstart.html">Quickstart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-rocket me-3"></i>Quickstart Guide</h1>
+            <p class="lead mb-0">Get started with BodyFocus development in 30 minutes</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Progress Summary -->
+        <div class="card progress-summary mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Your Progress</h5>
+                        <p class="text-muted mb-0"><span id="completedSteps">0</span> of <span id="totalSteps">0</span> steps completed</p>
+                    </div>
+                    <div>
+                        <div class="progress" style="width: 200px; height: 25px;">
+                            <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prerequisites Section -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0">Prerequisites</h3>
+                            <p class="text-muted mb-0">Before you begin, ensure you have these installed</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="prerequisitesChecklist">
+                        <div class="checklist-item" data-item="prereq-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-prereq-1">
+                            <label for="check-prereq-1"><strong>Xcode 15+</strong> - Download from Mac App Store</label>
+                        </div>
+                        <div class="checklist-item" data-item="prereq-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-prereq-2">
+                            <label for="check-prereq-2"><strong>macOS 14+ (Sonoma)</strong> - Required for iOS 17 development</label>
+                        </div>
+                        <div class="checklist-item" data-item="prereq-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-prereq-3">
+                            <label for="check-prereq-3"><strong>Git</strong> - For version control (optional but recommended)</label>
+                        </div>
+                        <div class="checklist-item" data-item="prereq-4">
+                            <input type="checkbox" class="form-check-input me-2" id="check-prereq-4">
+                            <label for="check-prereq-4"><strong>Claude Code</strong> - AI coding assistant (optional)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 1: Clone or Create Project -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">1</div>
+                        <div>
+                            <h3 class="mb-0">Set Up Project Directory</h3>
+                            <p class="text-muted mb-0">Create or clone the BodyFocus project</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Navigate to the BodyFocus project directory:</p>
+                    <div class="code-block">
+                        <pre class="bg-dark text-light p-3 rounded position-relative"><code>cd /Users/techdev/Projects/ClaudeDC/Workout</code></pre>
+                        <button class="btn btn-sm btn-outline-light copy-btn" onclick="copyCode(this)">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <p class="mt-3">The project structure is already set up with:</p>
+                    <ul>
+                        <li><code>specs/</code> - Feature specifications, plan, and tasks</li>
+                        <li><code>index.html</code> - Project dashboard</li>
+                        <li><code>pages/</code> - Documentation pages (you're reading one now!)</li>
+                        <li><code>.claude/</code> - Spec Kit slash commands</li>
+                        <li><code>.specify/</code> - Templates and constitution</li>
+                    </ul>
+
+                    <div class="mt-3" id="step1Checklist">
+                        <div class="checklist-item" data-item="step1-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step1-1">
+                            <label for="check-step1-1">Project directory exists at <code>/Users/techdev/Projects/ClaudeDC/Workout</code></label>
+                        </div>
+                        <div class="checklist-item" data-item="step1-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step1-2">
+                            <label for="check-step1-2">Navigated to project directory in terminal</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Review Documentation -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">2</div>
+                        <div>
+                            <h3 class="mb-0">Review Project Documentation</h3>
+                            <p class="text-muted mb-0">Understand the project structure and goals</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Familiarize yourself with the key documents:</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-file-alt text-primary me-2"></i>spec.md</h5>
+                                    <p class="card-text small">Feature specification with user stories and requirements</p>
+                                    <a href="specification.html" class="btn btn-sm btn-outline-primary">View Spec</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-map text-primary me-2"></i>plan.md</h5>
+                                    <p class="card-text small">Implementation plan with 10 phases over 21 days</p>
+                                    <a href="plan.html" class="btn btn-sm btn-outline-primary">View Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-tasks text-primary me-2"></i>tasks.md</h5>
+                                    <p class="card-text small">73 actionable tasks organized by phase</p>
+                                    <a href="tasks.html" class="btn btn-sm btn-outline-primary">View Tasks</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3" id="step2Checklist">
+                        <div class="checklist-item" data-item="step2-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step2-1">
+                            <label for="check-step2-1">Read the feature specification (spec.md)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step2-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step2-2">
+                            <label for="check-step2-2">Reviewed the implementation plan (plan.md)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step2-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step2-3">
+                            <label for="check-step2-3">Understand the task breakdown (tasks.md)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Create Swift Package -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">3</div>
+                        <div>
+                            <h3 class="mb-0">Create BodyFocusCore Package</h3>
+                            <p class="text-muted mb-0">Set up the core Swift package with models and logic</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Open Xcode and create a new Swift Package:</p>
+
+                    <ol>
+                        <li>Open Xcode</li>
+                        <li>File → New → Package...</li>
+                        <li>Choose "Library" template</li>
+                        <li>Name it <code>BodyFocusCore</code></li>
+                        <li>Save in your project directory</li>
+                    </ol>
+
+                    <div class="alert alert-info mt-3">
+                        <strong><i class="fas fa-lightbulb me-2"></i>Tip:</strong> Set minimum platform to iOS 17 in Package.swift
+                    </div>
+
+                    <div class="code-block mt-3">
+                        <pre class="bg-dark text-light p-3 rounded position-relative"><code>// Package.swift
+let package = Package(
+    name: "BodyFocusCore",
+    platforms: [.iOS(.v17)],
+    products: [
+        .library(
+            name: "BodyFocusCore",
+            targets: ["BodyFocusCore"])
+    ],
+    targets: [
+        .target(name: "BodyFocusCore"),
+        .testTarget(
+            name: "BodyFocusCoreTests",
+            dependencies: ["BodyFocusCore"])
+    ]
+)</code></pre>
+                        <button class="btn btn-sm btn-outline-light copy-btn" onclick="copyCode(this)">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <div class="mt-3" id="step3Checklist">
+                        <div class="checklist-item" data-item="step3-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step3-1">
+                            <label for="check-step3-1">Swift Package created and named BodyFocusCore</label>
+                        </div>
+                        <div class="checklist-item" data-item="step3-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step3-2">
+                            <label for="check-step3-2">Minimum platform set to iOS 17</label>
+                        </div>
+                        <div class="checklist-item" data-item="step3-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step3-3">
+                            <label for="check-step3-3">Package builds successfully</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Define Data Models -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">4</div>
+                        <div>
+                            <h3 class="mb-0">Define Core Models</h3>
+                            <p class="text-muted mb-0">Create the foundational data structures</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Create the following model files in <code>Sources/BodyFocusCore/Models/</code>:</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>File</th>
+                                    <th>Description</th>
+                                    <th>Key Types</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>Enums.swift</code></td>
+                                    <td>All enum types</td>
+                                    <td>PrimaryGoal, KneeProfile, MuscleGroup, EquipmentType, KneeLoadLevel, DayType</td>
+                                </tr>
+                                <tr>
+                                    <td><code>UserProfile.swift</code></td>
+                                    <td>User profile model</td>
+                                    <td>UserProfile</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Exercise.swift</code></td>
+                                    <td>Exercise definition</td>
+                                    <td>Exercise</td>
+                                </tr>
+                                <tr>
+                                    <td><code>WorkoutSession.swift</code></td>
+                                    <td>Workout session data</td>
+                                    <td>WorkoutSession, WorkoutExercise</td>
+                                </tr>
+                                <tr>
+                                    <td><code>CheckIn.swift</code></td>
+                                    <td>Pre-workout check-in</td>
+                                    <td>PreWorkoutCheckIn</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3" id="step4Checklist">
+                        <div class="checklist-item" data-item="step4-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step4-1">
+                            <label for="check-step4-1">All enum types defined</label>
+                        </div>
+                        <div class="checklist-item" data-item="step4-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step4-2">
+                            <label for="check-step4-2">Models conform to Identifiable and Codable</label>
+                        </div>
+                        <div class="checklist-item" data-item="step4-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step4-3">
+                            <label for="check-step4-3">Unit tests written for serialization</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: Build Workout Engine -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">5</div>
+                        <div>
+                            <h3 class="mb-0">Implement Workout Engine</h3>
+                            <p class="text-muted mb-0">Create the rules-based workout generation logic</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Create the workout engine in <code>Sources/BodyFocusCore/Engine/</code>:</p>
+
+                    <h5>Key Functions to Implement:</h5>
+                    <ul>
+                        <li><code>generateWeek(for:startDate:)</code> - Generate 3-day workout plan</li>
+                        <li><code>generateSession(for:dayIndex:date:)</code> - Create single workout session</li>
+                        <li><code>isAllowed(exercise:for:)</code> - Filter exercises by knee profile</li>
+                        <li><code>adjust(session:with:)</code> - Adjust workout based on check-in</li>
+                    </ul>
+
+                    <div class="alert alert-warning mt-3">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>Critical:</strong> Knee filtering is non-negotiable. Sensitive users get NO high knee-load exercises. Restricted users get ONLY low knee-load exercises.
+                    </div>
+
+                    <div class="mt-3" id="step5Checklist">
+                        <div class="checklist-item" data-item="step5-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step5-1">
+                            <label for="check-step5-1">Exercise library created (15-20 exercises)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step5-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step5-2">
+                            <label for="check-step5-2">Workout generation logic implemented</label>
+                        </div>
+                        <div class="checklist-item" data-item="step5-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step5-3">
+                            <label for="check-step5-3">Knee filtering works correctly</label>
+                        </div>
+                        <div class="checklist-item" data-item="step5-4">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step5-4">
+                            <label for="check-step5-4">Check-in adjustment logic implemented</label>
+                        </div>
+                        <div class="checklist-item" data-item="step5-5">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step5-5">
+                            <label for="check-step5-5">Engine unit tests passing</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 6: Create iOS App -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">6</div>
+                        <div>
+                            <h3 class="mb-0">Build iOS App Interface</h3>
+                            <p class="text-muted mb-0">Create the SwiftUI app with all screens</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Follow Phases 4-8 from the implementation plan:</p>
+
+                    <div class="accordion" id="appPhasesAccordion">
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#phase4">
+                                    Phase 4: App Structure & Navigation
+                                </button>
+                            </h3>
+                            <div id="phase4" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Create iOS app target</li>
+                                        <li>Link BodyFocusCore package</li>
+                                        <li>Create RootView with conditional navigation</li>
+                                        <li>Set up placeholder views</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#phase5">
+                                    Phase 5: Onboarding Flow
+                                </button>
+                            </h3>
+                            <div id="phase5" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Create OnboardingViewModel</li>
+                                        <li>Build 4-step onboarding: Goals, Knee Status, Schedule, Equipment</li>
+                                        <li>Generate first workout plan on completion</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#phase6">
+                                    Phase 6: Today Screen & Check-In
+                                </button>
+                            </h3>
+                            <div id="phase6" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Build TodayView with check-in card</li>
+                                        <li>Implement energy and knee pain sliders</li>
+                                        <li>Create "Adjust & Start" and "Skip" buttons</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#phase7">
+                                    Phase 7: Workout Player
+                                </button>
+                            </h3>
+                            <div id="phase7" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Create WorkoutPlayerView</li>
+                                        <li>Implement set tracking with checkboxes</li>
+                                        <li>Add exercise navigation</li>
+                                        <li>Save progress on completion</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#phase8">
+                                    Phase 8: Settings Screen
+                                </button>
+                            </h3>
+                            <div id="phase8" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Build SettingsView</li>
+                                        <li>Allow profile editing</li>
+                                        <li>Implement plan regeneration</li>
+                                        <li>Add data reset function</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3" id="step6Checklist">
+                        <div class="checklist-item" data-item="step6-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step6-1">
+                            <label for="check-step6-1">iOS app target created and linked to BodyFocusCore</label>
+                        </div>
+                        <div class="checklist-item" data-item="step6-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step6-2">
+                            <label for="check-step6-2">Onboarding flow complete and functional</label>
+                        </div>
+                        <div class="checklist-item" data-item="step6-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step6-3">
+                            <label for="check-step6-3">Today screen with check-in working</label>
+                        </div>
+                        <div class="checklist-item" data-item="step6-4">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step6-4">
+                            <label for="check-step6-4">Workout player tracks sets and saves progress</label>
+                        </div>
+                        <div class="checklist-item" data-item="step6-5">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step6-5">
+                            <label for="check-step6-5">Settings screen allows profile editing</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 7: Test & Polish -->
+        <section class="mb-5">
+            <div class="card step-card">
+                <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                        <div class="step-number me-3">7</div>
+                        <div>
+                            <h3 class="mb-0">Test & Polish</h3>
+                            <p class="text-muted mb-0">Comprehensive testing and final touches</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5>Testing Checklist:</h5>
+                    <div id="step7Checklist">
+                        <div class="checklist-item" data-item="step7-1">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-1">
+                            <label for="check-step7-1">All user stories tested manually</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-2">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-2">
+                            <label for="check-step7-2">Edge cases handled (no equipment, restricted knees, etc.)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-3">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-3">
+                            <label for="check-step7-3">Data persistence verified (app restart, mid-workout exit)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-4">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-4">
+                            <label for="check-step7-4">Tested on physical iOS device</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-5">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-5">
+                            <label for="check-step7-5">All bugs fixed</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-6">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-6">
+                            <label for="check-step7-6">App icon and launch screen added</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-7">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-7">
+                            <label for="check-step7-7">UI polish (colors, spacing, typography)</label>
+                        </div>
+                        <div class="checklist-item" data-item="step7-8">
+                            <input type="checkbox" class="form-check-input me-2" id="check-step7-8">
+                            <label for="check-step7-8">Loading states and error messages added</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="mb-5">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>You're Ready!</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Once you've completed all the steps above, you'll have a fully functional BodyFocus v0.1 app!</p>
+
+                    <h5 class="mt-3">What's Next?</h5>
+                    <ul>
+                        <li><strong>Use it daily:</strong> Dogfood the app with your own workouts</li>
+                        <li><strong>Gather feedback:</strong> Note what works and what doesn't</li>
+                        <li><strong>Plan v0.2:</strong> HealthKit integration and watchOS companion app</li>
+                        <li><strong>Iterate:</strong> Continuous improvement based on real use</li>
+                    </ul>
+
+                    <div class="alert alert-info mt-3">
+                        <strong><i class="fas fa-lightbulb me-2"></i>Pro Tip:</strong> Keep a workout journal to track which exercises feel good for your knees. This data will inform future AI features in v0.3!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-link text-primary me-2"></i>Helpful Resources</h3>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Documentation:</h5>
+                            <ul>
+                                <li><a href="specification.html">Feature Specification</a></li>
+                                <li><a href="plan.html">Implementation Plan</a></li>
+                                <li><a href="tasks.html">Task Breakdown</a></li>
+                                <li><a href="documentation.html">Full Documentation</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>External Resources:</h5>
+                            <ul>
+                                <li><a href="https://developer.apple.com/documentation/swiftui" target="_blank">SwiftUI Documentation</a></li>
+                                <li><a href="https://www.hackingwithswift.com/100/swiftui" target="_blank">Hacking with Swift</a></li>
+                                <li><a href="https://swift.org/documentation/" target="_blank">Swift Language Guide</a></li>
+                                <li><a href="https://github.com/anthropics/claude-code" target="_blank">Claude Code on GitHub</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BodyFocus Quickstart Guide</h5>
+                    <p class="text-muted mb-0">
+                        <small>Get up and running in 30 minutes • Step-by-step instructions</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="../index.html" class="text-white-50">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Progress tracking
+        const STORAGE_KEY = 'bodyfocus_quickstart_progress';
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        function saveProgress(progress) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        function updateProgress() {
+            const allCheckboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const checkedBoxes = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked');
+
+            const total = allCheckboxes.length;
+            const completed = checkedBoxes.length;
+            const percentage = total > 0 ? (completed / total * 100) : 0;
+
+            document.getElementById('totalSteps').textContent = total;
+            document.getElementById('completedSteps').textContent = completed;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressBar').textContent = Math.round(percentage) + '%';
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const code = codeBlock.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const progress = loadProgress();
+
+            // Restore checkbox states
+            document.querySelectorAll('.checklist-item').forEach(item => {
+                const itemId = item.dataset.item;
+                const checkbox = item.querySelector('input[type="checkbox"]');
+
+                if (progress[itemId]) {
+                    checkbox.checked = true;
+                    item.classList.add('completed');
+                }
+
+                // Add event listener
+                checkbox.addEventListener('change', function() {
+                    const progress = loadProgress();
+
+                    if (this.checked) {
+                        item.classList.add('completed');
+                        progress[itemId] = true;
+                    } else {
+                        item.classList.remove('completed');
+                        delete progress[itemId];
+                    }
+
+                    saveProgress(progress);
+                    updateProgress();
+                });
+            });
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

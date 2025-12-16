@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker - BodyFocus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .task-item {
+            transition: all 0.3s ease;
+        }
+        .task-item:hover {
+            background-color: rgba(9, 132, 227, 0.05);
+        }
+        .task-item.completed {
+            opacity: 0.6;
+        }
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+        }
+        .phase-progress {
+            height: 8px;
+            margin-top: 10px;
+        }
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="specification.html">Specification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plan.html">Implementation Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tasks.html">Task Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1><i class="fas fa-check-square me-3"></i>Task Tracker</h1>
+            <p class="lead mb-0">Track progress through all 73 implementation tasks</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Overall Progress -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="card-title mb-3">Overall Progress</h5>
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     role="progressbar"
+                                     style="width: 0%"
+                                     id="overallProgressBar">
+                                    <span id="overallProgressText">0 / 73 Tasks (0%)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <button class="btn btn-outline-primary me-2" onclick="exportProgress()">
+                                <i class="fas fa-download me-2"></i>Export
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="resetAllTasks()">
+                                <i class="fas fa-redo me-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label fw-bold">Filter by Status:</label>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary filter-btn active" onclick="filterByStatus('all')">All</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" onclick="filterByStatus('pending')">Pending</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary filter-btn" onclick="filterByStatus('in-progress')">In Progress</button>
+                                <button type="button" class="btn btn-sm btn-outline-success filter-btn" onclick="filterByStatus('completed')">Completed</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Search Tasks:</label>
+                            <input type="text" class="form-control" id="taskSearch" placeholder="Search by task name or description..." onkeyup="searchTasks()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 1: Foundation & Models -->
+        <section class="mb-4 phase-section" data-phase="1">
+            <div class="phase-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cube me-2"></i>Phase 1: Foundation & Models
+                        <span class="badge bg-secondary ms-2">8 tasks</span>
+                    </h3>
+                    <span class="badge bg-info" id="phase1-progress">0 / 8 Complete</span>
+                </div>
+                <div class="progress phase-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" id="phase1-bar"></div>
+                </div>
+            </div>
+            <div class="task-list mt-3">
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-001" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-001')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-001:</strong> Create BodyFocusCore Swift Package in Xcode</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Create new Swift Package in project</li>
+                                <li>Name it <code>BodyFocusCore</code></li>
+                                <li>Set minimum platform to iOS 17</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-002" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-002')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-002:</strong> Define all enums in Enums.swift</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li><code>PrimaryGoal: String, Codable, CaseIterable</code></li>
+                                <li><code>KneeProfile: String, Codable, CaseIterable</code></li>
+                                <li><code>MuscleGroup: String, Codable</code></li>
+                                <li><code>EquipmentType: String, Codable</code></li>
+                                <li><code>KneeLoadLevel: Int, Codable</code></li>
+                                <li><code>DayType: String, Codable</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-003" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-003')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-003:</strong> Define UserProfile model</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: id (UUID), name (String), primaryGoal, kneeProfile, daysPerWeek, minutesPerSession, equipment</li>
+                                <li>Conformance: Identifiable, Codable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-004" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-004')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-004:</strong> Define Exercise model</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: id, name, primaryMuscle, kneeLoad, equipment, isCompound</li>
+                                <li>Conformance: Identifiable, Codable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-005" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-005')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-005:</strong> Define WorkoutExercise model</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: id, exercise (Exercise), targetSets, targetReps</li>
+                                <li>Conformance: Identifiable, Codable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-006" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-006')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-006:</strong> Define WorkoutSession model</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: id, date, dayIndex, dayType, plannedExercises, isCompleted</li>
+                                <li>Conformance: Identifiable, Codable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-007" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-007')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-007:</strong> Define PreWorkoutCheckIn model</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: energy (Int), kneePainLevel (Int)</li>
+                                <li>Conformance: Codable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-008" data-phase="1">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-008')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-008:</strong> Write unit tests for model serialization</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test encode/decode round-trip for all models</li>
+                                <li>Test edge cases (nil values, empty arrays)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 2: Exercise Library & Workout Engine -->
+        <section class="mb-4 phase-section" data-phase="2">
+            <div class="phase-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>Phase 2: Exercise Library & Workout Engine
+                        <span class="badge bg-secondary ms-2">7 tasks</span>
+                    </h3>
+                    <span class="badge bg-info" id="phase2-progress">0 / 7 Complete</span>
+                </div>
+                <div class="progress phase-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" id="phase2-bar"></div>
+                </div>
+            </div>
+            <div class="task-list mt-3">
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-009" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-009')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-009:</strong> Create ExerciseLibrary.swift with static exercise database</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Add 15-20 exercises covering all muscle groups</li>
+                                <li>Tag each with kneeLoad, primaryMuscle, equipment, isCompound</li>
+                                <li>Include: RDL, glute bridge, bench press, push-up, row, curls, triceps, etc.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-010" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-010')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-010:</strong> Create WorkoutEngine.swift struct</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Define struct with no state</li>
+                                <li>Add static property <code>exerciseLibrary</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-011" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-011')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-011:</strong> Implement generateWeek(for:startDate:) function</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Take UserProfile and start date</li>
+                                <li>Return array of 3 WorkoutSession objects</li>
+                                <li>Call <code>generateSession()</code> for each day</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-012" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-012')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-012:</strong> Implement generateSession(for:dayIndex:date:) private function</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Set dayType to .fullBody</li>
+                                <li>Filter exercises by equipment and knee profile</li>
+                                <li>Select 1 hinge/glute, 1 push, 1 pull, 1-2 arms</li>
+                                <li>Create WorkoutExercise objects with target sets/reps</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-013" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-013')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-013:</strong> Implement isAllowed(exercise:for:) private function</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Return true for healthy (all exercises)</li>
+                                <li>Return false for sensitive if kneeLoad == .high</li>
+                                <li>Return false for restricted if kneeLoad != .low</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-014" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-014')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-014:</strong> Implement adjust(session:with:) function</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Take WorkoutSession and PreWorkoutCheckIn</li>
+                                <li>If energy <= 2 or kneePainLevel >= 1, reduce targetSets by 1 (min 1)</li>
+                                <li>Return adjusted WorkoutSession</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-015" data-phase="2">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-015')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-015:</strong> Write unit tests for WorkoutEngine</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test exercise filtering by knee profile</li>
+                                <li>Test arm volume increases for arms goal</li>
+                                <li>Test check-in adjustment logic</li>
+                                <li>Test edge cases (no matching exercises, empty equipment)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 3: Data Persistence Layer -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-database text-primary me-2"></i>Phase 3: Data Persistence Layer</h3>
+                <p class="text-muted mb-2">Duration: 1 day • 6 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase3Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-016 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-016" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-016')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-016:</strong> Create DataStore.swift protocol</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Define methods: <code>loadProfile()</code>, <code>saveProfile()</code>, <code>loadSessions()</code>, <code>saveSessions()</code></li>
+                                <li>Use async/throws signatures</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-017 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-017" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-017')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-017:</strong> Create JSONDataStore.swift implementation</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Implement DataStore protocol</li>
+                                <li>Use FileManager to get Documents directory</li>
+                                <li>Save profile as <code>profile.json</code></li>
+                                <li>Save sessions as <code>sessions.json</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-018 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-018" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-018')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-018:</strong> Implement loadProfile() method</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Read <code>profile.json</code> from Documents</li>
+                                <li>Decode JSON to UserProfile</li>
+                                <li>Return nil if file doesn't exist</li>
+                                <li>Throw error on decode failure</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-019 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-019" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-019')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-019:</strong> Implement saveProfile() method</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Encode UserProfile to JSON</li>
+                                <li>Write to <code>profile.json</code> in Documents</li>
+                                <li>Use atomic write (write to temp, then rename)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-020 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-020" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-020')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-020:</strong> Implement loadSessions() and saveSessions() methods</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Similar to profile methods but for array of WorkoutSession</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-021 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-021" data-phase="3">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-021')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-021:</strong> Write unit tests for JSONDataStore</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test save/load profile round-trip</li>
+                                <li>Test save/load sessions round-trip</li>
+                                <li>Test handling of missing files</li>
+                                <li>Test error handling for corrupted JSON</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 4: iOS App Structure & Navigation -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-mobile-alt text-primary me-2"></i>Phase 4: iOS App Structure & Navigation</h3>
+                <p class="text-muted mb-2">Duration: 2 days • 6 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase4Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-022 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-022" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-022')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-022:</strong> Create BodyFocusApp iOS app target in Xcode</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Create new iOS App (SwiftUI)</li>
+                                <li>Name it <code>BodyFocusApp</code></li>
+                                <li>Set minimum iOS version to 17</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-023 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-023" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-023')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-023:</strong> Link BodyFocusCore package to BodyFocusApp target</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Add BodyFocusCore as dependency in target settings</li>
+                                <li>Import BodyFocusCore in Swift files</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-024 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-024" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-024')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-024:</strong> Create BodyFocusApp.swift main entry point</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Define <code>@main struct BodyFocusApp: App</code></li>
+                                <li>Set <code>RootView()</code> as initial view</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-025 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-025" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-025')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-025:</strong> Create RootView.swift with conditional navigation</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Check if profile exists in data store</li>
+                                <li>Show <code>OnboardingView()</code> if no profile</li>
+                                <li>Show main tabs if profile exists</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-026 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-026" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-026')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-026:</strong> Create placeholder views</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li><code>OnboardingView.swift</code> (just "Onboarding" text)</li>
+                                <li><code>TodayView.swift</code> (just "Today" text)</li>
+                                <li><code>WorkoutPlayerView.swift</code> (just "Workout Player" text)</li>
+                                <li><code>SettingsView.swift</code> (just "Settings" text)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-027 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-027" data-phase="4">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-027')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-027:</strong> Set up TabView navigation in RootView</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Tab 1: TodayView (icon: calendar)</li>
+                                <li>Tab 2: SettingsView (icon: gear)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 5: Onboarding Flow -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-user-plus text-primary me-2"></i>Phase 5: Onboarding Flow</h3>
+                <p class="text-muted mb-2">Duration: 3 days • 7 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase5Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-028 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-028" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-028')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-028:</strong> Create OnboardingViewModel ObservableObject</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: currentStep (Int), profile (UserProfile draft)</li>
+                                <li>Methods: nextStep(), previousStep(), submitOnboarding()</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-029 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-029" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-029')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-029:</strong> Create OnboardingView.swift navigation container</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Use TabView with .page style for horizontal swiping</li>
+                                <li>Show progress indicator (step X of 4)</li>
+                                <li>Embed step views: GoalSelectionView, KneeProfileView, ScheduleView, EquipmentView</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-030 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-030" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-030')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-030:</strong> Create GoalSelectionView (Step 1)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display segmented control or VStack of cards for PrimaryGoal options</li>
+                                <li>Bind selection to viewModel.profile.primaryGoal</li>
+                                <li>Show "Continue" button</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-031 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-031" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-031')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-031:</strong> Create KneeProfileView (Step 2)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display radio buttons (Picker) for KneeProfile options</li>
+                                <li>Bind selection to viewModel.profile.kneeProfile</li>
+                                <li>Show "Back" and "Continue" buttons</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-032 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-032" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-032')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-032:</strong> Create ScheduleView (Step 3)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display Picker for daysPerWeek (1-3)</li>
+                                <li>Display Picker for minutesPerSession (20, 30, 45)</li>
+                                <li>Bind selections to viewModel.profile</li>
+                                <li>Show "Back" and "Continue" buttons</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-033 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-033" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-033')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-033:</strong> Create EquipmentView (Step 4)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display checkboxes for EquipmentType options</li>
+                                <li>Bind selections to viewModel.profile.equipment array</li>
+                                <li>Show "Back" and "Start" buttons</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-034 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-034" data-phase="5">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-034')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-034:</strong> Implement submitOnboarding() in ViewModel</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Save profile using DataStore</li>
+                                <li>Generate first week using WorkoutEngine</li>
+                                <li>Save sessions using DataStore</li>
+                                <li>Dismiss onboarding (trigger RootView to show tabs)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 6: Today Screen & Pre-Workout Check-In -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-calendar-day text-primary me-2"></i>Phase 6: Today Screen & Pre-Workout Check-In</h3>
+                <p class="text-muted mb-2">Duration: 2 days • 8 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase6Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-035 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-035" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-035')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-035:</strong> Create TodayViewModel ObservableObject</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: profile, todaySession, allSessions, checkIn (PreWorkoutCheckIn)</li>
+                                <li>Methods: loadData(), adjustAndStart(), skipAndStart()</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-036 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-036" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-036')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-036:</strong> Implement loadData() method</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Load profile from DataStore</li>
+                                <li>Load sessions from DataStore</li>
+                                <li>Find today's session by matching date</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-037 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-037" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-037')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-037:</strong> Create TodayView.swift layout</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>VStack with three sections: check-in card, workout summary, weekly overview</li>
+                                <li>Show "Rest day" message if no session for today</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-038 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-038" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-038')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-038:</strong> Create PreWorkoutCheckInView embedded in TodayView</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Slider for energy (1-5) with labels</li>
+                                <li>Slider for kneePainLevel (0-2) with labels</li>
+                                <li>Bind to viewModel.checkIn</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-039 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-039" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-039')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-039:</strong> Implement workout summary card</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display session.dayType and estimated time</li>
+                                <li>List exercises with sets/reps (e.g., "Romanian Deadlift (3 x 8)")</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-040 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-040" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-040')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-040:</strong> Implement weekly overview section</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>HStack with 5 day indicators (Mon-Fri)</li>
+                                <li>Show ✓ for completed, ● for today, ○ for planned</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-041 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-041" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-041')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-041:</strong> Implement "Adjust & Start Workout" button</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Call WorkoutEngine.adjust(session, checkIn)</li>
+                                <li>Navigate to WorkoutPlayerView with adjusted session</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-042 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-042" data-phase="6">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-042')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-042:</strong> Implement "Skip Check-in & Start" button</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Navigate to WorkoutPlayerView with original session</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 7: Workout Player -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-play-circle text-primary me-2"></i>Phase 7: Workout Player</h3>
+                <p class="text-muted mb-2">Duration: 3 days • 9 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase7Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-043 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-043" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-043')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-043:</strong> Create WorkoutViewModel ObservableObject</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: session, currentExerciseIndex, completedSets (array of bools)</li>
+                                <li>Methods: markSetDone(), nextExercise(), previousExercise(), finishWorkout()</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-044 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-044" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-044')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-044:</strong> Create WorkoutPlayerView.swift layout</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Header: progress indicator, timer</li>
+                                <li>Body: current exercise card, set tracking table</li>
+                                <li>Footer: navigation buttons</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-045 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-045" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-045')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-045:</strong> Implement header section</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Text: "Exercise X of Y"</li>
+                                <li>Simple timer (elapsed time in MM:SS format)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-046 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-046" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-046')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-046:</strong> Implement current exercise card</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Exercise name (large, bold)</li>
+                                <li>Muscle groups and knee load badge</li>
+                                <li>Target sets/reps/weight</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-047 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-047" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-047')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-047:</strong> Implement set tracking table</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>ForEach over targetSets</li>
+                                <li>Each row: "Set X | [reps] reps | [weight] lb | [✓ checkbox]"</li>
+                                <li>Bind checkboxes to viewModel.completedSets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-048 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-048" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-048')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-048:</strong> Implement "This irritated my knees" toggle</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Toggle below set table</li>
+                                <li>Save flag to session when toggled</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-049 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-049" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-049')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-049:</strong> Implement navigation controls</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>"Previous" button (disabled on first exercise)</li>
+                                <li>"Next" button (enabled when all sets complete or user can skip)</li>
+                                <li>"Finish Workout" button (enabled on last exercise)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-050 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-050" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-050')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-050:</strong> Implement markSetDone() method</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Update completedSets array</li>
+                                <li>Save progress to DataStore (partial session update)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-051 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-051" data-phase="7">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-051')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-051:</strong> Implement finishWorkout() method</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Mark session.isCompleted = true</li>
+                                <li>Save session to DataStore</li>
+                                <li>Navigate back to TodayView</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 8: Settings Screen -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-cog text-primary me-2"></i>Phase 8: Settings Screen</h3>
+                <p class="text-muted mb-2">Duration: 2 days • 6 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase8Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-052 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-052" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-052')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-052:</strong> Create SettingsViewModel ObservableObject</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Properties: profile (editable copy)</li>
+                                <li>Methods: loadProfile(), saveChanges(), regeneratePlan(), resetAppData()</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-053 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-053" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-053')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-053:</strong> Create SettingsView.swift layout</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Form with sections: Profile, Actions</li>
+                                <li>Profile section: display/edit current values</li>
+                                <li>Actions section: buttons for regenerate, reset</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-054 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-054" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-054')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-054:</strong> Implement profile display/edit controls</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Picker for primaryGoal</li>
+                                <li>Picker for kneeProfile</li>
+                                <li>Picker for daysPerWeek and minutesPerSession</li>
+                                <li>Multi-select for equipment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-055 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-055" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-055')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-055:</strong> Implement "Save Changes" button</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Call viewModel.saveChanges()</li>
+                                <li>Save updated profile to DataStore</li>
+                                <li>Show success message</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-056 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-056" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-056')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-056:</strong> Implement "Regenerate Plan" button</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Call WorkoutEngine.generateWeek() with updated profile</li>
+                                <li>Save new sessions to DataStore</li>
+                                <li>Show success message</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-057 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-057" data-phase="8">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-057')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-057:</strong> Implement "Reset App Data" button</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Show confirmation alert</li>
+                                <li>If confirmed, delete profile.json and sessions.json</li>
+                                <li>Navigate to onboarding</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 9: Testing & Bug Fixes -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-bug text-primary me-2"></i>Phase 9: Testing & Bug Fixes</h3>
+                <p class="text-muted mb-2">Duration: 2 days • 8 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase9Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-058 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-058" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-058')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-058:</strong> Manual test User Story 1 (Onboarding)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test all acceptance scenarios from spec.md</li>
+                                <li>Verify workout plan generates correctly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-059 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-059" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-059')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-059:</strong> Manual test User Story 2 (Check-in)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test low energy/high pain reduces sets</li>
+                                <li>Verify skip option works</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-060 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-060" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-060')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-060:</strong> Manual test User Story 3 (Workout tracking)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test set completion and navigation</li>
+                                <li>Verify session marks as complete</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-061 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-061" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-061')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-061:</strong> Manual test User Story 4 (Weekly view)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Verify status indicators display correctly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-062 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-062" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-062')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-062:</strong> Manual test User Story 5 (Settings)</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Test profile editing and plan regeneration</li>
+                                <li>Test data reset</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-063 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-063" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-063')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-063:</strong> Test edge cases</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>No equipment selected</li>
+                                <li>Restricted knees with limited exercises</li>
+                                <li>Mid-workout app exit and resume</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-064 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-064" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-064')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-064:</strong> Test data persistence</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Force quit app mid-workout</li>
+                                <li>Relaunch and verify progress saved</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-065 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-065" data-phase="9">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-065')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-065:</strong> Fix all bugs discovered during testing</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Address issues found in manual testing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 10: Polish & Documentation -->
+        <section class="phase-section mb-5">
+            <div class="phase-header">
+                <h3><i class="fas fa-star text-primary me-2"></i>Phase 10: Polish & Documentation</h3>
+                <p class="text-muted mb-2">Duration: 2 days • 8 tasks</p>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" id="phase10Progress" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <!-- TASK-066 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-066" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-066')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-066:</strong> Add app icon</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Design or generate simple icon</li>
+                                <li>Add to Assets.xcassets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-067 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-067" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-067')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-067:</strong> Create launch screen</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Simple branded splash screen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-068 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-068" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-068')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-068:</strong> Improve UI styling</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Define color scheme (primary, secondary, accent)</li>
+                                <li>Apply consistent typography</li>
+                                <li>Add spacing and padding</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-069 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-069" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-069')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-069:</strong> Add loading states</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Show ProgressView while loading data</li>
+                                <li>Show empty states for missing data</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-070 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-070" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-070')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-070:</strong> Add error messages</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Display user-friendly errors for failures</li>
+                                <li>Provide recovery actions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-071 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-071" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-071')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-071:</strong> Write README.md</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Project overview</li>
+                                <li>Setup instructions</li>
+                                <li>Architecture diagram</li>
+                                <li>Usage guide</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-072 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-072" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-072')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-072:</strong> Write CHANGELOG.md</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Document v0.1 features</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK-073 -->
+                <div class="task-item pending p-3 mb-2 border rounded" data-task-id="TASK-073" data-phase="10">
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="task-checkbox me-3 mt-1" onchange="toggleTask('TASK-073')">
+                        <div class="flex-grow-1">
+                            <h6 class="task-title mb-1"><strong>TASK-073:</strong> Add code comments</h6>
+                            <ul class="task-details small text-muted mb-0">
+                                <li>Document complex algorithms</li>
+                                <li>Add header comments to files</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>BodyFocus Task Tracker</h5>
+                    <p class="text-muted mb-0">
+                        <small>Track your implementation progress • 73 tasks across 10 phases</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="../index.html" class="text-white-50">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Task tracking functionality
+        const STORAGE_KEY = 'bodyfocus_task_status';
+
+        // Initialize task state from localStorage
+        function loadTaskState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Save task state to localStorage
+        function saveTaskState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        // Toggle task completion
+        function toggleTask(taskId) {
+            const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+            const checkbox = taskElement.querySelector('.task-checkbox');
+            const state = loadTaskState();
+
+            if (checkbox.checked) {
+                taskElement.classList.remove('pending');
+                taskElement.classList.add('completed');
+                state[taskId] = 'completed';
+            } else {
+                taskElement.classList.remove('completed');
+                taskElement.classList.add('pending');
+                delete state[taskId];
+            }
+
+            saveTaskState(state);
+            updateProgress();
+        }
+
+        // Update all progress bars
+        function updateProgress() {
+            const allTasks = document.querySelectorAll('.task-item');
+            const completedTasks = document.querySelectorAll('.task-item.completed');
+            const totalTasks = allTasks.length;
+            const completedCount = completedTasks.length;
+            const percentage = totalTasks > 0 ? (completedCount / totalTasks * 100) : 0;
+
+            // Update overall progress
+            const progressBar = document.getElementById('overallProgressBar');
+            const progressText = document.getElementById('overallProgressText');
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = `${completedCount} / ${totalTasks} Tasks (${Math.round(percentage)}%)`;
+
+            // Update phase progress
+            for (let phase = 1; phase <= 10; phase++) {
+                updatePhaseProgress(phase);
+            }
+        }
+
+        // Update specific phase progress
+        function updatePhaseProgress(phaseNum) {
+            const phaseTasks = document.querySelectorAll(`[data-phase="${phaseNum}"]`);
+            if (phaseTasks.length === 0) return;
+
+            const phaseCompleted = Array.from(phaseTasks).filter(t => t.classList.contains('completed')).length;
+            const phaseTotal = phaseTasks.length;
+            const phasePercentage = phaseTotal > 0 ? (phaseCompleted / phaseTotal * 100) : 0;
+
+            const progressBadge = document.getElementById(`phase${phaseNum}-progress`);
+            const progressBar = document.getElementById(`phase${phaseNum}-bar`);
+
+            if (progressBadge) {
+                progressBadge.textContent = `${phaseCompleted} / ${phaseTotal} Complete`;
+            }
+            if (progressBar) {
+                progressBar.style.width = phasePercentage + '%';
+            }
+        }
+
+        // Filter tasks by status
+        function filterByStatus(status) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter tasks
+            const allTasks = document.querySelectorAll('.task-item');
+            allTasks.forEach(task => {
+                if (status === 'all') {
+                    task.style.display = 'block';
+                } else {
+                    task.style.display = task.classList.contains(status) ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Search tasks
+        function searchTasks() {
+            const query = document.getElementById('taskSearch').value.toLowerCase();
+            const allTasks = document.querySelectorAll('.task-item');
+
+            allTasks.forEach(task => {
+                const text = task.textContent.toLowerCase();
+                task.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // Export progress to JSON
+        function exportProgress() {
+            const state = loadTaskState();
+            const dataStr = JSON.stringify(state, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'bodyfocus_progress_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+
+            alert('Progress exported successfully!');
+        }
+
+        // Reset all tasks
+        function resetAllTasks() {
+            if (!confirm('Are you sure you want to reset all task progress? This cannot be undone.')) {
+                return;
+            }
+
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const state = loadTaskState();
+
+            // Restore task states
+            Object.keys(state).forEach(taskId => {
+                const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                if (taskElement && state[taskId] === 'completed') {
+                    taskElement.classList.remove('pending');
+                    taskElement.classList.add('completed');
+                    taskElement.querySelector('.task-checkbox').checked = true;
+                }
+            });
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
