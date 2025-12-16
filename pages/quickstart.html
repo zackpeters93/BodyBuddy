@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quickstart Guide - BodyFocus</title>
+    <title>Quickstart Guide - BodyBuddy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
@@ -65,7 +65,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="../index.html">
-                <i class="fas fa-dumbbell me-2"></i>BodyFocus
+                <i class="fas fa-dumbbell me-2"></i>BodyBuddy
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -99,7 +99,7 @@
     <header class="bg-primary text-white py-4">
         <div class="container">
             <h1><i class="fas fa-rocket me-3"></i>Quickstart Guide</h1>
-            <p class="lead mb-0">Get started with BodyFocus development in 30 minutes</p>
+            <p class="lead mb-0">Get started with BodyBuddy development in 30 minutes</p>
         </div>
     </header>
 
@@ -167,12 +167,12 @@
                         <div class="step-number me-3">1</div>
                         <div>
                             <h3 class="mb-0">Set Up Project Directory</h3>
-                            <p class="text-muted mb-0">Create or clone the BodyFocus project</p>
+                            <p class="text-muted mb-0">Create or clone the BodyBuddy project</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>Navigate to the BodyFocus project directory:</p>
+                    <p>Navigate to the BodyBuddy project directory:</p>
                     <div class="code-block">
                         <pre class="bg-dark text-light p-3 rounded position-relative"><code>cd /Users/techdev/Projects/ClaudeDC/Workout</code></pre>
                         <button class="btn btn-sm btn-outline-light copy-btn" onclick="copyCode(this)">
@@ -273,7 +273,7 @@
                     <div class="d-flex align-items-center">
                         <div class="step-number me-3">3</div>
                         <div>
-                            <h3 class="mb-0">Create BodyFocusCore Package</h3>
+                            <h3 class="mb-0">Create BodyBuddyCore Package</h3>
                             <p class="text-muted mb-0">Set up the core Swift package with models and logic</p>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                         <li>Open Xcode</li>
                         <li>File → New → Package...</li>
                         <li>Choose "Library" template</li>
-                        <li>Name it <code>BodyFocusCore</code></li>
+                        <li>Name it <code>BodyBuddyCore</code></li>
                         <li>Save in your project directory</li>
                     </ol>
 
@@ -296,18 +296,18 @@
                     <div class="code-block mt-3">
                         <pre class="bg-dark text-light p-3 rounded position-relative"><code>// Package.swift
 let package = Package(
-    name: "BodyFocusCore",
+    name: "BodyBuddyCore",
     platforms: [.iOS(.v17)],
     products: [
         .library(
-            name: "BodyFocusCore",
-            targets: ["BodyFocusCore"])
+            name: "BodyBuddyCore",
+            targets: ["BodyBuddyCore"])
     ],
     targets: [
-        .target(name: "BodyFocusCore"),
+        .target(name: "BodyBuddyCore"),
         .testTarget(
-            name: "BodyFocusCoreTests",
-            dependencies: ["BodyFocusCore"])
+            name: "BodyBuddyCoreTests",
+            dependencies: ["BodyBuddyCore"])
     ]
 )</code></pre>
                         <button class="btn btn-sm btn-outline-light copy-btn" onclick="copyCode(this)">
@@ -318,7 +318,7 @@ let package = Package(
                     <div class="mt-3" id="step3Checklist">
                         <div class="checklist-item" data-item="step3-1">
                             <input type="checkbox" class="form-check-input me-2" id="check-step3-1">
-                            <label for="check-step3-1">Swift Package created and named BodyFocusCore</label>
+                            <label for="check-step3-1">Swift Package created and named BodyBuddyCore</label>
                         </div>
                         <div class="checklist-item" data-item="step3-2">
                             <input type="checkbox" class="form-check-input me-2" id="check-step3-2">
@@ -346,7 +346,7 @@ let package = Package(
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>Create the following model files in <code>Sources/BodyFocusCore/Models/</code>:</p>
+                    <p>Create the following model files in <code>Sources/BodyBuddyCore/Models/</code>:</p>
 
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -418,7 +418,7 @@ let package = Package(
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>Create the workout engine in <code>Sources/BodyFocusCore/Engine/</code>:</p>
+                    <p>Create the workout engine in <code>Sources/BodyBuddyCore/Engine/</code>:</p>
 
                     <h5>Key Functions to Implement:</h5>
                     <ul>
@@ -484,7 +484,7 @@ let package = Package(
                                 <div class="accordion-body">
                                     <ul>
                                         <li>Create iOS app target</li>
-                                        <li>Link BodyFocusCore package</li>
+                                        <li>Link BodyBuddyCore package</li>
                                         <li>Create RootView with conditional navigation</li>
                                         <li>Set up placeholder views</li>
                                     </ul>
@@ -562,7 +562,7 @@ let package = Package(
                     <div class="mt-3" id="step6Checklist">
                         <div class="checklist-item" data-item="step6-1">
                             <input type="checkbox" class="form-check-input me-2" id="check-step6-1">
-                            <label for="check-step6-1">iOS app target created and linked to BodyFocusCore</label>
+                            <label for="check-step6-1">iOS app target created and linked to BodyBuddyCore</label>
                         </div>
                         <div class="checklist-item" data-item="step6-2">
                             <input type="checkbox" class="form-check-input me-2" id="check-step6-2">
@@ -644,7 +644,7 @@ let package = Package(
                     <h3 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>You're Ready!</h3>
                 </div>
                 <div class="card-body">
-                    <p class="lead">Once you've completed all the steps above, you'll have a fully functional BodyFocus v0.1 app!</p>
+                    <p class="lead">Once you've completed all the steps above, you'll have a fully functional BodyBuddy v0.1 app!</p>
 
                     <h5 class="mt-3">What's Next?</h5>
                     <ul>
@@ -697,7 +697,7 @@ let package = Package(
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>BodyFocus Quickstart Guide</h5>
+                    <h5>BodyBuddy Quickstart Guide</h5>
                     <p class="text-muted mb-0">
                         <small>Get up and running in 30 minutes • Step-by-step instructions</small>
                     </p>

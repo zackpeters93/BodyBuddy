@@ -1,4 +1,4 @@
-// BodyFocus - Main JavaScript
+// BodyBuddy - Main JavaScript
 // Task tracking and interactive features
 
 // Task Data Structure (will be loaded from tasks.md dynamically)

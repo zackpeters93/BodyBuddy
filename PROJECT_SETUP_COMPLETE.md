@@ -1,4 +1,4 @@
-# BodyFocus Project Setup - COMPLETE ✅
+# BodyBuddy Project Setup - COMPLETE ✅
 
 **Date**: 2025-12-15
 **Status**: Planning & Infrastructure Complete
@@ -233,7 +233,7 @@ open http://localhost:8080
 
 ### ⏳ Implementation Phase (NOT STARTED)
 - [ ] Xcode project created
-- [ ] BodyFocusCore Swift Package created
+- [ ] BodyBuddyCore Swift Package created
 - [ ] Phase 1 complete (Foundation & Models)
 - [ ] ... (all 10 phases)
 
@@ -304,8 +304,8 @@ open http://localhost:8080
 ### Then: Begin Implementation
 
 9. **Open Xcode**
-10. **Create BodyFocus iOS App project**
-11. **Create BodyFocusCore Swift Package**
+10. **Create BodyBuddy iOS App project**
+11. **Create BodyBuddyCore Swift Package**
 12. **Start TASK-001** (from tasks.md)
 
 ---
@@ -314,7 +314,7 @@ open http://localhost:8080
 
 ### Compared to Standard Projects
 
-| Standard Project | BodyFocus (Spec Kit + HTML) |
+| Standard Project | BodyBuddy (Spec Kit + HTML) |
 |-----------------|------------------------------|
 | README.md only | 22 markdown files |
 | "Start coding" | 73 predefined tasks |
@@ -383,7 +383,7 @@ Before starting Swift development:
 
 **The foundation is rock-solid. The dashboard is beautiful. The path is clear.**
 
-**Let's build BodyFocus! 🏋️**
+**Let's build BodyBuddy! 🏋️**
 
 ---
 

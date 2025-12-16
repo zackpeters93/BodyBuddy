@@ -1,17 +1,17 @@
-# CLAUDE.md - BodyFocus Workout App
+# CLAUDE.md - BodyBuddy Workout App
 
 > **Version:** 1.0.0
 > **Last Updated:** 2025-12-15
-> **Project:** BodyFocus - Hyper-personalized iOS Workout Planning App
+> **Project:** BodyBuddy - Hyper-personalized iOS Workout Planning App
 > **Status:** v0.1 Development (Planning Phase Complete)
 
 ---
 
 ## 🎯 Project Overview
 
-### What is BodyFocus?
+### What is BodyBuddy?
 
-BodyFocus is a SwiftUI-based workout planning application for iOS (and eventually watchOS) that creates personalized, adaptive workout plans based on:
+BodyBuddy is a SwiftUI-based workout planning application for iOS (and eventually watchOS) that creates personalized, adaptive workout plans based on:
 - **Injury constraints** (especially knee safety)
 - **Personal goals** (fat loss, strength, arm development, general fitness)
 - **Real-time state** (energy levels, joint pain, recovery status)
@@ -38,9 +38,9 @@ This project follows a **dogfooding methodology**: built for personal use first 
 - **UI Framework**: SwiftUI (iOS 17+)
 - **Data Persistence**: JSON-based local storage (v0.1), SwiftData migration (v0.2)
 - **Package Structure**: Swift Package Manager
-  - `BodyFocusCore`: Shared models, workout engine, data store
-  - `BodyFocusApp`: iOS app target (main UI)
-  - `BodyFocusWatchApp`: watchOS target (v0.2+)
+  - `BodyBuddyCore`: Shared models, workout engine, data store
+  - `BodyBuddyApp`: iOS app target (main UI)
+  - `BodyBuddyWatchApp`: watchOS target (v0.2+)
 
 ### Module Structure
 
@@ -59,13 +59,13 @@ Workout/
 │       ├── plan.md             # Implementation plan
 │       ├── tasks.md            # Task breakdown
 │       └── checklists/         # Acceptance criteria
-├── BodyFocusCore/              # Swift Package (shared logic)
-│   ├── Sources/BodyFocusCore/
+├── BodyBuddyCore/              # Swift Package (shared logic)
+│   ├── Sources/BodyBuddyCore/
 │   │   ├── Models/             # Data models and enums
 │   │   ├── Engine/             # Workout generation logic
 │   │   └── Storage/            # Data persistence
 │   └── Tests/                  # Unit tests
-├── BodyFocusApp/               # iOS App Target
+├── BodyBuddyApp/               # iOS App Target
 │   ├── Views/                  # SwiftUI views
 │   ├── ViewModels/             # ObservableObject view models
 │   └── Assets.xcassets/        # App resources
@@ -141,7 +141,7 @@ Workout/
 
 ### American Palette (inherited from ClaudeControlCenter)
 
-While BodyFocus will have its own visual identity, it follows the same design philosophy:
+While BodyBuddy will have its own visual identity, it follows the same design philosophy:
 - Flat design, no gradients
 - Clear typography hierarchy
 - Generous spacing and padding
@@ -188,7 +188,7 @@ test: Add unit tests for PreWorkoutCheckIn adjustment
 ### v0.1 Roadmap
 
 **Phase 1**: Foundation & Models (NEXT)
-- [ ] Create BodyFocusCore Swift Package
+- [ ] Create BodyBuddyCore Swift Package
 - [ ] Define all models and enums
 - [ ] Write model serialization tests
 
@@ -222,7 +222,7 @@ The following features are **explicitly deferred** to future versions:
 
 ## 🧪 Testing Requirements
 
-### Unit Tests (BodyFocusCore)
+### Unit Tests (BodyBuddyCore)
 
 Every model and engine function MUST have unit tests:
 - **Models**: Test Codable conformance (encode/decode round-trip)
@@ -286,7 +286,7 @@ Before marking a phase complete:
 
 ## 🎯 Success Criteria (v0.1)
 
-BodyFocus v0.1 is considered complete when:
+BodyBuddy v0.1 is considered complete when:
 
 - ✅ User can complete onboarding and see a workout plan in under 3 minutes
 - ✅ Pre-workout check-in successfully adjusts workout volume based on energy/pain
@@ -372,7 +372,7 @@ This project embodies Zack's principles:
 ---
 
 **Status**: Planning complete, ready for Phase 1 implementation
-**Next Step**: Create BodyFocusCore Swift Package and define models
+**Next Step**: Create BodyBuddyCore Swift Package and define models
 **Last Updated**: 2025-12-15
 
 🏋️ **Let's build something that works for real bodies, not just idealized ones!**

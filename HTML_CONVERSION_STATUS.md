@@ -221,7 +221,7 @@ Workout/
         "tasks": [
           {
             "id": "TASK-001",
-            "description": "Create BodyFocusCore Swift Package",
+            "description": "Create BodyBuddyCore Swift Package",
             "status": "pending",
             "completedAt": null
           }

@@ -1,14 +1,14 @@
-# BodyFocus Project Constitution
+# BodyBuddy Project Constitution
 
 **Version**: 1.0.0
 **Created**: 2025-12-15
-**Project**: BodyFocus - iOS Workout Planning App
+**Project**: BodyBuddy - iOS Workout Planning App
 
 ---
 
 ## 🎯 Project Purpose
 
-BodyFocus exists to create a **safe, personalized, and adaptive workout planning experience** for individuals with injury constraints, specific goals, and varying daily capacity.
+BodyBuddy exists to create a **safe, personalized, and adaptive workout planning experience** for individuals with injury constraints, specific goals, and varying daily capacity.
 
 This app embodies the principle: **Build for real bodies, not idealized ones.**
 

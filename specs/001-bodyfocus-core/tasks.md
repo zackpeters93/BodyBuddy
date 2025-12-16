@@ -1,4 +1,4 @@
-# Tasks: BodyFocus Core v0.1
+# Tasks: BodyBuddy Core v0.1
 
 **Feature**: `001-bodyfocus-core`
 **Created**: 2025-12-15
@@ -10,9 +10,9 @@
 
 ### Phase 1: Foundation & Models
 
-- [ ] **TASK-001**: Create BodyFocusCore Swift Package in Xcode
+- [ ] **TASK-001**: Create BodyBuddyCore Swift Package in Xcode
   - Create new Swift Package in project
-  - Name it `BodyFocusCore`
+  - Name it `BodyBuddyCore`
   - Set minimum platform to iOS 17
 
 - [ ] **TASK-002**: Define all enums in `Enums.swift`
@@ -125,17 +125,17 @@
 
 ### Phase 4: iOS App Structure & Navigation
 
-- [ ] **TASK-022**: Create BodyFocusApp iOS app target in Xcode
+- [ ] **TASK-022**: Create BodyBuddyApp iOS app target in Xcode
   - Create new iOS App (SwiftUI)
-  - Name it `BodyFocusApp`
+  - Name it `BodyBuddyApp`
   - Set minimum iOS version to 17
 
-- [ ] **TASK-023**: Link BodyFocusCore package to BodyFocusApp target
-  - Add BodyFocusCore as dependency in target settings
-  - Import BodyFocusCore in Swift files
+- [ ] **TASK-023**: Link BodyBuddyCore package to BodyBuddyApp target
+  - Add BodyBuddyCore as dependency in target settings
+  - Import BodyBuddyCore in Swift files
 
-- [ ] **TASK-024**: Create `BodyFocusApp.swift` main entry point
-  - Define `@main struct BodyFocusApp: App`
+- [ ] **TASK-024**: Create `BodyBuddyApp.swift` main entry point
+  - Define `@main struct BodyBuddyApp: App`
   - Set `RootView()` as initial view
 
 - [ ] **TASK-025**: Create `RootView.swift` with conditional navigation

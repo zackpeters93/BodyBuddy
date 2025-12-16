@@ -1,4 +1,4 @@
-# Feature Specification: BodyFocus Core - iOS Workout Planning App
+# Feature Specification: BodyBuddy Core - iOS Workout Planning App
 
 **Feature Branch**: `001-bodyfocus-core`
 **Created**: 2025-12-15
@@ -7,7 +7,7 @@
 
 ## Overview
 
-BodyFocus is a SwiftUI-based workout planning application for iOS and watchOS that creates personalized, adaptive workout plans. The app emphasizes minimal effective dose training (4-Hour Body philosophy), knee-safety, arms focus, and real-time adjustment based on pre-workout check-ins. This specification covers v0.1: the core rules-based workout engine with local storage, no AI, HealthKit, or geolocation.
+BodyBuddy is a SwiftUI-based workout planning application for iOS and watchOS that creates personalized, adaptive workout plans. The app emphasizes minimal effective dose training (4-Hour Body philosophy), knee-safety, arms focus, and real-time adjustment based on pre-workout check-ins. This specification covers v0.1: the core rules-based workout engine with local storage, no AI, HealthKit, or geolocation.
 
 The app follows a dogfooding approach: built for personal use first, then extended to app market distribution.
 
@@ -196,9 +196,9 @@ The user experiences knee pain during a specific exercise and wants to flag it f
 
 - **Swift + SwiftUI**: Core language and UI framework
 - **SwiftData or Core Data**: Local data persistence (v0.1 may use JSON for simplicity)
-- **BodyFocusCore**: Shared Swift Package for models, workout engine, and logic
-- **BodyFocusApp**: iOS app target (SwiftUI, iOS 17+)
-- **BodyFocusWatchApp**: watchOS target (future - v0.2+)
+- **BodyBuddyCore**: Shared Swift Package for models, workout engine, and logic
+- **BodyBuddyApp**: iOS app target (SwiftUI, iOS 17+)
+- **BodyBuddyWatchApp**: watchOS target (future - v0.2+)
 
 ---
 

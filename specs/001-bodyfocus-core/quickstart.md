@@ -1,4 +1,4 @@
-# Quick Start Guide: BodyFocus Core Development
+# Quick Start Guide: BodyBuddy Core Development
 
 **Feature**: `001-bodyfocus-core`
 **Version**: v0.1
@@ -65,7 +65,7 @@ Workout/
 
 ---
 
-## 🛠️ Phase 1: Create BodyFocusCore Package (Next)
+## 🛠️ Phase 1: Create BodyBuddyCore Package (Next)
 
 ### Step 1: Create Swift Package
 
@@ -74,13 +74,13 @@ Workout/
 open -a Xcode
 
 # File → New → Package
-# Name: BodyFocusCore
+# Name: BodyBuddyCore
 # Minimum platform: iOS 17
 ```
 
 ### Step 2: Define Models
 
-Create these files in `BodyFocusCore/Sources/BodyFocusCore/Models/`:
+Create these files in `BodyBuddyCore/Sources/BodyBuddyCore/Models/`:
 
 - `Enums.swift` - All enum types
 - `UserProfile.swift` - User profile model
@@ -105,7 +105,7 @@ swift test
 
 | Phase | Deliverable | Test |
 |-------|-------------|------|
-| **Phase 1** | BodyFocusCore package with models | Unit tests pass |
+| **Phase 1** | BodyBuddyCore package with models | Unit tests pass |
 | **Phase 2** | WorkoutEngine generates valid plans | Engine tests pass |
 | **Phase 3** | JSONDataStore saves/loads data | Persistence tests pass |
 | **Phase 4** | iOS app with navigation structure | App builds and runs |
@@ -120,10 +120,10 @@ swift test
 
 ## 🧪 Testing Strategy
 
-### Unit Tests (BodyFocusCore)
+### Unit Tests (BodyBuddyCore)
 
 ```bash
-cd BodyFocusCore
+cd BodyBuddyCore
 swift test
 ```
 
@@ -290,7 +290,7 @@ let profile = loadProfile()!
 
 Before marking Phase 1 complete:
 
-- [ ] BodyFocusCore package created in Xcode
+- [ ] BodyBuddyCore package created in Xcode
 - [ ] All enums defined (6 total)
 - [ ] All models defined (5 total)
 - [ ] All models conform to Identifiable and Codable

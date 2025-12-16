@@ -1,4 +1,4 @@
-# Implementation Plan: BodyFocus Core v0.1
+# Implementation Plan: BodyBuddy Core v0.1
 
 **Feature**: `001-bodyfocus-core`
 **Created**: 2025-12-15
@@ -9,7 +9,7 @@
 
 ## Overview
 
-This plan outlines the implementation approach for BodyFocus v0.1, a minimal viable workout planning app for iOS. The implementation follows a **bottom-up approach**: build the core data models and workout engine first, then wrap them in SwiftUI views.
+This plan outlines the implementation approach for BodyBuddy v0.1, a minimal viable workout planning app for iOS. The implementation follows a **bottom-up approach**: build the core data models and workout engine first, then wrap them in SwiftUI views.
 
 ---
 
@@ -20,13 +20,13 @@ This plan outlines the implementation approach for BodyFocus v0.1, a minimal via
 **Goal**: Create the core Swift package with all data models and enums.
 
 **Tasks**:
-1. Create `BodyFocusCore` Swift Package
+1. Create `BodyBuddyCore` Swift Package
 2. Define all enums (`PrimaryGoal`, `KneeProfile`, `MuscleGroup`, `EquipmentType`, `KneeLoadLevel`, `DayType`)
 3. Define core models (`UserProfile`, `Exercise`, `WorkoutExercise`, `WorkoutSession`, `PreWorkoutCheckIn`)
 4. Add `Identifiable` and `Codable` conformance to all models
 5. Write unit tests for model serialization/deserialization
 
-**Deliverable**: Compilable `BodyFocusCore` package with all models defined.
+**Deliverable**: Compilable `BodyBuddyCore` package with all models defined.
 
 **Dependencies**: None
 
@@ -73,9 +73,9 @@ This plan outlines the implementation approach for BodyFocus v0.1, a minimal via
 **Goal**: Set up the iOS app target with navigation and tab structure.
 
 **Tasks**:
-1. Create `BodyFocusApp` iOS app target in Xcode
-2. Link `BodyFocusCore` package to app target
-3. Create `BodyFocusApp.swift` (main app entry point with @main)
+1. Create `BodyBuddyApp` iOS app target in Xcode
+2. Link `BodyBuddyCore` package to app target
+3. Create `BodyBuddyApp.swift` (main app entry point with @main)
 4. Create `RootView.swift` with conditional logic: show onboarding if no profile, else show main tabs
 5. Create empty placeholder views for: `OnboardingView`, `TodayView`, `WorkoutPlayerView`, `SettingsView`
 6. Set up basic navigation structure (no functionality yet, just wireframes)
@@ -216,9 +216,9 @@ This plan outlines the implementation approach for BodyFocus v0.1, a minimal via
 ### Module Structure
 
 ```
-BodyFocus/
-├── BodyFocusCore/               # Swift Package (shared logic)
-│   ├── Sources/BodyFocusCore/
+BodyBuddy/
+├── BodyBuddyCore/               # Swift Package (shared logic)
+│   ├── Sources/BodyBuddyCore/
 │   │   ├── Models/
 │   │   │   ├── Enums.swift
 │   │   │   ├── UserProfile.swift
@@ -231,12 +231,12 @@ BodyFocus/
 │   │   └── Storage/
 │   │       ├── DataStore.swift
 │   │       └── JSONDataStore.swift
-│   └── Tests/BodyFocusCoreTests/
+│   └── Tests/BodyBuddyCoreTests/
 │       ├── ModelTests.swift
 │       ├── EngineTests.swift
 │       └── StorageTests.swift
-├── BodyFocusApp/                # iOS App Target
-│   ├── BodyFocusApp.swift       # @main entry point
+├── BodyBuddyApp/                # iOS App Target
+│   ├── BodyBuddyApp.swift       # @main entry point
 │   ├── RootView.swift           # Conditional: onboarding vs tabs
 │   ├── Views/
 │   │   ├── Onboarding/
@@ -287,7 +287,7 @@ BodyFocus/
 
 ## Testing Strategy
 
-### Unit Tests (BodyFocusCore)
+### Unit Tests (BodyBuddyCore)
 
 - **Models**: Test Codable conformance (encode/decode round-trip)
 - **Workout Engine**: Test exercise filtering, volume calculations, adjustment logic

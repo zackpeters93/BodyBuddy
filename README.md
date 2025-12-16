@@ -1,4 +1,4 @@
-# BodyFocus - Hyper-Personalized iOS Workout Planning App
+# BodyBuddy - Hyper-Personalized iOS Workout Planning App
 
 > A SwiftUI-based workout planning app that adapts to your injuries, goals, and daily state using 4-Hour Body methodology.
 
@@ -8,9 +8,9 @@
 
 ---
 
-## 🎯 What is BodyFocus?
+## 🎯 What is BodyBuddy?
 
-BodyFocus creates personalized, adaptive workout plans that respect your body's constraints and evolve with your progress. Unlike generic workout apps, it:
+BodyBuddy creates personalized, adaptive workout plans that respect your body's constraints and evolve with your progress. Unlike generic workout apps, it:
 
 - **Prioritizes safety**: Filters exercises based on knee (or other joint) limitations
 - **Adapts daily**: Pre-workout check-ins adjust volume based on energy and pain levels
@@ -58,15 +58,15 @@ Originally built for Zack (54, recovering from knee issues, wants arm developmen
 ### Module Structure
 
 ```
-BodyFocus/
-├── BodyFocusCore/              # Swift Package (business logic)
+BodyBuddy/
+├── BodyBuddyCore/              # Swift Package (business logic)
 │   ├── Models/                 # Data models (UserProfile, Exercise, WorkoutSession)
 │   ├── Engine/                 # WorkoutEngine (generation logic)
 │   └── Storage/                # DataStore (persistence)
-├── BodyFocusApp/               # iOS App (SwiftUI views)
+├── BodyBuddyApp/               # iOS App (SwiftUI views)
 │   ├── Views/                  # Onboarding, Today, WorkoutPlayer, Settings
 │   └── ViewModels/             # ObservableObject controllers
-└── BodyFocusWatchApp/          # watchOS App (v0.2+)
+└── BodyBuddyWatchApp/          # watchOS App (v0.2+)
 ```
 
 ### Data Flow
@@ -106,12 +106,12 @@ Completed session saved → Today screen shows ✓
 
 2. **Open in Xcode**:
    ```bash
-   open BodyFocus.xcodeproj
+   open BodyBuddy.xcodeproj
    ```
    *(Note: Project creation is Phase 4 of implementation - not yet created)*
 
 3. **Select target**:
-   - Choose `BodyFocusApp` scheme
+   - Choose `BodyBuddyApp` scheme
    - Select your iPhone or simulator
 
 4. **Run**:
@@ -236,7 +236,7 @@ See `specs/001-bodyfocus-core/tasks.md` for detailed task list.
 
 ### Unit Tests
 
-Run unit tests for `BodyFocusCore`:
+Run unit tests for `BodyBuddyCore`:
 ```bash
 swift test
 ```
@@ -338,6 +338,6 @@ For issues or questions:
 
 **Status**: v0.1 Planning Complete | Ready to begin Phase 1
 **Last Updated**: 2025-12-15
-**Next Milestone**: Create BodyFocusCore Swift Package and define models
+**Next Milestone**: Create BodyBuddyCore Swift Package and define models
 
 🏋️ **Building workouts that work for real bodies, not just idealized ones!**

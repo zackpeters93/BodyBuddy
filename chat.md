@@ -1626,7 +1626,7 @@ Swap exercise (text button)
 ⌚ Screen D – watchOS Workout Screen
 Complication-like header:
 
-Top: BodyFocus
+Top: BodyBuddy
 
 Sub: Today – Full Body + Arms
 
@@ -1657,17 +1657,17 @@ Tiny: End button at bottom.
 2️⃣ Swift Module Layout (Targets & Package)
 Structure this as:
 
-Xcode Workspace: BodyFocus (or whatever name you like)
+Xcode Workspace: BodyBuddy (or whatever name you like)
 
 Targets:
 
-BodyFocusApp (iOS, SwiftUI, iOS 17+)
+BodyBuddyApp (iOS, SwiftUI, iOS 17+)
 
-BodyFocusWatchApp (watchOS, SwiftUI, watchOS 10+)
+BodyBuddyWatchApp (watchOS, SwiftUI, watchOS 10+)
 
-BodyFocusCore (Swift Package)
+BodyBuddyCore (Swift Package)
 
-BodyFocusCore (Swift Package) contains:
+BodyBuddyCore (Swift Package) contains:
 
 Models/
 
@@ -1693,9 +1693,9 @@ Services/
 
 (Later) AnalyticsService.swift
 
-iOS App Target (BodyFocusApp):
+iOS App Target (BodyBuddyApp):
 
-Uses BodyFocusCore package.
+Uses BodyBuddyCore package.
 
 Folders:
 
@@ -1723,9 +1723,9 @@ LocalDataStore.swift (SwiftData/Core Data or JSON for v0.1)
 
 (Later) HealthKit, Location, EventKit wrappers.
 
-watchOS App Target (BodyFocusWatchApp):
+watchOS App Target (BodyBuddyWatchApp):
 
-Uses BodyFocusCore.
+Uses BodyBuddyCore.
 
 Folders:
 
@@ -2090,7 +2090,7 @@ Adjust volume based on pre-check-in.
 6️⃣ Concrete v0.1 Feature Spec (Drop-in Blueprint)
 You can paste this into a spec doc / ticket system or Claude Code as scaffolding.
 
-Project: BodyFocus (working title)
+Project: BodyBuddy (working title)
 Version: v0.1 – Local Minimal Engine
 
 1. Platforms & Tech
@@ -2098,7 +2098,7 @@ iOS 17+ (SwiftUI).
 
 watchOS target created but not required for v0.1.
 
-Swift Package: BodyFocusCore for models + engine.
+Swift Package: BodyBuddyCore for models + engine.
 
 Local storage:
 
@@ -2258,7 +2258,7 @@ CalendarService
 
 AIStrategyClient
 
-These just get defined as empty protocols in BodyFocusCore so you don’t have to rewire everything later.
+These just get defined as empty protocols in BodyBuddyCore so you don’t have to rewire everything later.
 
 If you want, next step can be:
 
