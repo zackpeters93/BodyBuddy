@@ -2,9 +2,10 @@
 
 > A SwiftUI-based workout planning app that adapts to your injuries, goals, and daily state using 4-Hour Body methodology.
 
-**Status**: v0.1 Planning Complete | Implementation In Progress
+**Status**: v0.1 Complete | Ready for Testing
 **Platform**: iOS 17+ (watchOS planned for v0.2)
 **Methodology**: Spec Kit (spec-driven development)
+**Repository**: [github.com/zackpeters93/BodyBuddy](https://github.com/zackpeters93/BodyBuddy)
 
 ---
 
@@ -101,21 +102,31 @@ Completed session saved → Today screen shows ✓
 
 1. **Clone the repository**:
    ```bash
-   cd /Users/techdev/Projects/ClaudeDC/Workout
+   git clone https://github.com/zackpeters93/BodyBuddy.git
+   cd BodyBuddy
    ```
 
 2. **Open in Xcode**:
    ```bash
    open BodyBuddy.xcodeproj
    ```
-   *(Note: Project creation is Phase 4 of implementation - not yet created)*
 
 3. **Select target**:
-   - Choose `BodyBuddyApp` scheme
-   - Select your iPhone or simulator
+   - Choose `BodyBuddy` scheme
+   - Select your iPhone or iOS Simulator (iOS 17+)
 
 4. **Run**:
    - Press ⌘R or click "Run" in Xcode
+   - The app will build and launch on your device/simulator
+
+### Running Tests
+
+```bash
+cd BodyBuddyCore
+swift test
+```
+
+Currently 62 unit tests covering models, engine, and storage.
 
 ---
 
@@ -209,26 +220,31 @@ func adjust(session: WorkoutSession, with checkIn: PreWorkoutCheckIn) -> Workout
 
 ## 📋 Project Status
 
-### v0.1 Development Progress
+### v0.1 - Complete
 
-See `specs/001-bodyfocus-core/tasks.md` for detailed task list.
+| Phase | Status | Description |
+|-------|--------|-------------|
+| Phase 1 | ✅ | Models, enums, Swift Package setup |
+| Phase 2 | ✅ | Workout engine (21 exercises) |
+| Phase 3 | ✅ | JSON data persistence with atomic writes |
+| Phase 4 | ✅ | iOS app structure and Xcode project |
+| Phase 5 | ✅ | 4-step onboarding flow |
+| Phase 6 | ✅ | Today screen, check-ins, rest day override |
+| Phase 7 | ✅ | Workout player with set tracking |
+| Phase 8 | ✅ | Settings and profile editing |
+| Phase 9 | ✅ | Testing (62 unit tests) |
+| Phase 10 | ✅ | Polish and documentation |
 
-**Current Phase**: Phase 1 - Foundation & Models
+### Future Versions
 
-| Phase | Status | Tasks | Description |
-|-------|--------|-------|-------------|
-| Phase 1 | ⏳ Next | 8 tasks | Models, enums, Swift Package setup |
-| Phase 2 | ⏳ | 7 tasks | Workout engine and exercise library |
-| Phase 3 | ⏳ | 6 tasks | JSON data persistence |
-| Phase 4 | ⏳ | 6 tasks | iOS app structure and navigation |
-| Phase 5 | ⏳ | 7 tasks | Onboarding flow |
-| Phase 6 | ⏳ | 8 tasks | Today screen and check-ins |
-| Phase 7 | ⏳ | 9 tasks | Workout player |
-| Phase 8 | ⏳ | 6 tasks | Settings screen |
-| Phase 9 | ⏳ | 8 tasks | Testing and bug fixes |
-| Phase 10 | ⏳ | 8 tasks | Polish and documentation |
+| Version | Status | Features |
+|---------|--------|----------|
+| v0.2 | Planned | HealthKit, watchOS companion |
+| v0.3 | Planned | Authentication, Cloud Sync, AI Constraints |
+| v0.4 | Planned | Geolocation, Calendar integration |
+| v0.5 | Planned | App Store submission |
 
-**Estimated Timeline**: 21 days (3 weeks) | **Start Date**: TBD
+See [FUTURE_ENHANCEMENTS.md](specs/FUTURE_ENHANCEMENTS.md) for detailed roadmap.
 
 ---
 
@@ -336,8 +352,8 @@ For issues or questions:
 
 ---
 
-**Status**: v0.1 Planning Complete | Ready to begin Phase 1
-**Last Updated**: 2025-12-15
-**Next Milestone**: Create BodyBuddyCore Swift Package and define models
+**Status**: v0.1 Complete
+**Last Updated**: 2026-01-10
+**Next Milestone**: v0.2 - HealthKit and watchOS integration
 
 🏋️ **Building workouts that work for real bodies, not just idealized ones!**
