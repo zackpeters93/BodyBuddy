@@ -1,5 +1,5 @@
 # Xcode
-*.xcodeproj
+# Note: We track BodyBuddy.xcodeproj for the main app
 *.xcworkspace
 !*.xcworkspace/contents.xcworkspacedata
 *.xcuserdata
