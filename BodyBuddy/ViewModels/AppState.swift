@@ -28,15 +28,22 @@ final class AppState: ObservableObject {
     /// Current error to display
     @Published var currentError: AppError?
 
+    /// HealthKit authorization status
+    @Published var isHealthKitAuthorized: Bool = false
+
     // MARK: - Dependencies
 
     private let dataStore: JSONDataStore
+    private let healthKitManager = HealthKitManager.shared
+    private let watchConnectivityManager = WatchConnectivityManager.shared
 
     // MARK: - Initialization
 
     init(dataStore: JSONDataStore = JSONDataStore()) {
         self.dataStore = dataStore
         loadInitialState()
+        setupWatchConnectivity()
+        setupHealthKit()
     }
 
     // MARK: - Navigation State
@@ -45,6 +52,67 @@ final class AppState: ObservableObject {
         case loading
         case onboarding
         case main
+    }
+
+    // MARK: - HealthKit Setup
+
+    private func setupHealthKit() {
+        // Check if authorization was already requested
+        if healthKitManager.isAvailable && !healthKitManager.authorizationRequested {
+            // Will request authorization when first workout is completed
+        }
+        isHealthKitAuthorized = healthKitManager.isAuthorized
+    }
+
+    /// Requests HealthKit authorization (call before first workout save)
+    func requestHealthKitAuthorization() async {
+        guard healthKitManager.isAvailable else { return }
+
+        do {
+            try await healthKitManager.requestAuthorization()
+            isHealthKitAuthorized = healthKitManager.isAuthorized
+        } catch {
+            print("HealthKit authorization failed: \(error)")
+        }
+    }
+
+    // MARK: - WatchConnectivity Setup
+
+    private func setupWatchConnectivity() {
+        // Handle watch requests for today's workout
+        watchConnectivityManager.onTodayWorkoutRequest = { [weak self] in
+            guard let self = self else {
+                return TodayWorkoutPayload(session: nil, isInProgress: false, userName: "")
+            }
+            return TodayWorkoutPayload(
+                session: self.todaySession,
+                isInProgress: self.isWorkoutInProgress,
+                userName: self.userProfile?.name ?? ""
+            )
+        }
+
+        // Handle set completion from watch
+        watchConnectivityManager.onSetCompletion = { [weak self] payload in
+            guard let self = self,
+                  self.todaySession?.id == payload.sessionId else { return }
+            self.completeSet(forExerciseAt: payload.exerciseIndex)
+        }
+
+        // Handle start workout from watch
+        watchConnectivityManager.onStartWorkout = { [weak self] in
+            self?.startWorkout()
+        }
+
+        // Handle finish workout from watch
+        watchConnectivityManager.onFinishWorkout = { [weak self] in
+            self?.finishWorkout()
+        }
+    }
+
+    /// Notifies watch of workout state changes
+    private func notifyWatchOfStateChange() {
+        guard let session = todaySession else { return }
+        watchConnectivityManager.sendWorkoutState(session, isInProgress: isWorkoutInProgress)
     }
 
     // MARK: - Initial Load
@@ -115,6 +183,9 @@ final class AppState: ObservableObject {
                 plan.sessions[index] = session
                 self.weeklyPlan = plan
             }
+
+            // Notify watch of workout start
+            notifyWatchOfStateChange()
         } catch {
             self.currentError = AppError.saveFailed(error)
         }
@@ -136,6 +207,9 @@ final class AppState: ObservableObject {
                 plan.sessions[planIndex] = session
                 self.weeklyPlan = plan
             }
+
+            // Notify watch of progress
+            notifyWatchOfStateChange()
         } catch {
             self.currentError = AppError.saveFailed(error)
         }
@@ -160,8 +234,34 @@ final class AppState: ObservableObject {
                 plan.sessions[index] = session
                 self.weeklyPlan = plan
             }
+
+            // Notify watch of completion
+            notifyWatchOfStateChange()
+
+            // Save to HealthKit
+            Task {
+                await saveToHealthKit(session)
+            }
         } catch {
             self.currentError = AppError.saveFailed(error)
+        }
+    }
+
+    /// Saves the completed workout to HealthKit
+    private func saveToHealthKit(_ session: WorkoutSession) async {
+        // Request authorization if not yet authorized
+        if !healthKitManager.isAuthorized {
+            try? await healthKitManager.requestAuthorization()
+            isHealthKitAuthorized = healthKitManager.isAuthorized
+        }
+
+        guard healthKitManager.isAuthorized else { return }
+
+        do {
+            try await healthKitManager.saveWorkout(session)
+        } catch {
+            // Log but don't show error to user - HealthKit save is best-effort
+            print("HealthKit save failed: \(error.localizedDescription)")
         }
     }
 

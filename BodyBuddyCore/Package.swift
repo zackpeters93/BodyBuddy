@@ -7,6 +7,7 @@ let package = Package(
     name: "BodyBuddyCore",
     platforms: [
         .iOS(.v17),
+        .watchOS(.v10),
         .macOS(.v14)
     ],
     products: [
